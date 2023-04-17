@@ -14,23 +14,23 @@ export default function Nav() {
                     </Link>
                     <div className="flex flex-row gap-6">
                         <Link href="/">
-                            <button>
+                            <button className="text-primary-500 hover:text-black hover:dark:text-white transition-colors duration-100">
                                 Home
                             </button>
                         </Link>
                         <Link href="/articles">
-                            <button>
+                            <button className="text-primary-500 hover:text-black hover:dark:text-white transition-colors duration-100">
                                 Articles
                             </button>
                         </Link>
                         <Link href="/team">
-                            <button>
+                            <button className="text-primary-500 hover:text-black hover:dark:text-white transition-colors duration-100">
                                 Team
                             </button>
                         </Link>
                     </div>
                     <div>
-                        <button className="p-1 px-3 bg-black dark:bg-white text-white dark:text-black rounded-md border border-black dark:border-white hover:bg-white/40 hover:text-black hover:dark:bg-black/40 hover:dark:text-white transition-all duration-300">
+                        <button className="p-1 px-3 bg-black dark:bg-white text-white dark:text-black rounded-md border border-black dark:border-white hover:bg-white hover:text-black hover:dark:bg-black hover:dark:text-white transition-colors active:bg-black/10 active:dark:bg-white/10 duration-150">
                             Log in
                         </button>
                     </div>
