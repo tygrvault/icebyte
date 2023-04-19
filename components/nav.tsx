@@ -21,12 +21,12 @@ export default function Nav() {
             </Link>
             <Link href="/articles">
               <Button variant={"link"} size={"sm"}>
-                Home
+                Articles
               </Button>
             </Link>
             <Link href="/team">
               <Button variant={"link"} size={"sm"}>
-                Home
+                Team
               </Button>
             </Link>
           </div>
