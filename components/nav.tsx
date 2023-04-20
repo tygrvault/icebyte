@@ -3,6 +3,8 @@ import DarkLogo from "@/public/logos/dark.svg";
 import LightLogo from "@/public/logos/light.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import AuthDialog from "./auth/dialog";
+import { ThemeToggle } from "./theme-toggle";
 
 export default function Nav() {
   return (
@@ -30,8 +32,11 @@ export default function Nav() {
               </Button>
             </Link>
           </div>
-          <div>
-            <Button size={"sm"}>Log in</Button>
+          <div className="flex flex-row items-center gap-4">
+            <ThemeToggle />
+            <AuthDialog>
+              <Button size={"sm"}>Log in</Button>
+            </AuthDialog>
           </div>
         </div>
       </nav>
