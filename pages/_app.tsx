@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider enableSystem={true} attribute="class">
-        <Toaster theme="dark" className="h-full min-h-[50px]" />
+        <Toaster theme="dark" />
         <AuthProvider>
           <Nav />
           <Component {...pageProps} />
