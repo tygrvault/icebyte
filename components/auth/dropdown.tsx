@@ -14,7 +14,7 @@ export default function AuthDropdown() {
         <>
             {user ? (
                 <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger asChild className="cursor-pointer">
                         <Avatar className="border border-black/10 dark:border dark:border-white/10">
                             <AvatarImage src={avatar} />
                             <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
