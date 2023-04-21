@@ -1,6 +1,6 @@
 import Link from "next/link";
-import DarkLogo from "@/public/logos/dark.svg";
-import LightLogo from "@/public/logos/light.svg";
+import DarkLogo from "@/public/assets/logos/dark.svg";
+import LightLogo from "@/public/assets/logos/light.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import AuthDropdown from "./auth/dropdown";
