@@ -3,7 +3,7 @@ import DarkLogo from "@/public/logos/dark.svg";
 import LightLogo from "@/public/logos/light.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import AuthDialog from "./auth/dialog";
+import AuthDropdown from "./auth/dropdown";
 import { ThemeToggle } from "./theme-toggle";
 
 export default function Nav() {
@@ -34,9 +34,7 @@ export default function Nav() {
           </div>
           <div className="flex flex-row items-center gap-4">
             <ThemeToggle />
-            <AuthDialog>
-              <Button size={"sm"}>Log in</Button>
-            </AuthDialog>
+            <AuthDropdown />
           </div>
         </div>
       </nav>
