@@ -19,6 +19,7 @@ export default function AuthDrawer({
 
     const [mode, setMode] = useState<"login" | "register" | "reset">("login");
 
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
 
     const [email, setEmail] = useState("");
@@ -84,6 +85,13 @@ export default function AuthDrawer({
                         {mode === "register" && (
                             <>
                                 <Input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Full Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <Input
                                     id="username"
                                     type="text"
                                     placeholder="Username"
@@ -114,7 +122,7 @@ export default function AuthDrawer({
                                 <Button
                                     className="w-full text-md"
                                     onClick={() =>
-                                        register(username, email, password, confirmPassword)
+                                        register(name, username, email, password, confirmPassword)
                                     }
                                 >
                                     Create Account

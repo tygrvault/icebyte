@@ -22,6 +22,7 @@ export default function AuthDialog({
 
   const [mode, setMode] = React.useState<"login" | "register" | "reset">("login");
 
+  const [name, setName] = React.useState("");
   const [username, setUsername] = React.useState("");
 
   const [email, setEmail] = React.useState("");
@@ -41,8 +42,8 @@ export default function AuthDialog({
             </DialogTitle>
             <DialogDescription className="m-0 text-center text">
               {mode === "login" && "Please log in to your Pixel account."}
-                            {mode === "register" && "Register a Pixel account and join the club!"}
-                            {mode === "reset" && "Please enter your email address to reset your password."}
+              {mode === "register" && "Register a Pixel account and join the club!"}
+              {mode === "reset" && "Please enter your email address to reset your password."}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4 px-4">
@@ -84,6 +85,13 @@ export default function AuthDialog({
             {mode === "register" && (
               <>
                 <Input
+                  id="name"
+                  type="text"
+                  placeholder="Full Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Input
                   id="username"
                   type="text"
                   placeholder="Username"
@@ -114,7 +122,7 @@ export default function AuthDialog({
                 <Button
                   className="w-full text-md"
                   onClick={() =>
-                    register(username, email, password, confirmPassword)
+                    register(name, username, email, password, confirmPassword)
                   }
                 >
                   Create Account

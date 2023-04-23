@@ -15,6 +15,7 @@ export interface AuthSession {
     logIn: (email: string, password: string) => Promise<void>;
     logOut: () => void;
     register: (
+        name: string,
         username: string,
         email: string,
         password: string,
@@ -94,17 +95,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const register = async (
+        name: string,
         username: string,
         email: string,
         password: string,
         passwordConfirm: string,
     ) => {
-        const tag = (Math.floor(Math.random() * 9999) + 1).toString().padStart(4, "0");
-
         toast.promise(pb.collection("users").create({
+            name,
             username,
             email,
-            tag,
             password,
             passwordConfirm
         }), {
