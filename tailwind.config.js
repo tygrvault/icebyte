@@ -1,17 +1,15 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
     './components/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx}',
     './app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       colors: {
         primary: {
           50: "#fff",
@@ -24,7 +22,11 @@ module.exports = {
           700: "#333",
           800: "#111",
           900: "#000",
-        }
+        },
+        ...defaultTheme.colors,
+      },
+      fontSize: {
+        ...defaultTheme.fontSize
       }
     },
   },
