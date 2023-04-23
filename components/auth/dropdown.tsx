@@ -36,7 +36,7 @@ export default function AuthDropdown() {
                                     </span>
                                 </div>
                                 <div>
-                                    <Code className="w-5 h-5 font-bold text-primary-500" />
+                                    {/* Badges */}
                                 </div>
                             </div>
                         </DropdownMenuLabel>
