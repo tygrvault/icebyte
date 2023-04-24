@@ -3,9 +3,10 @@ import DarkLogo from "@/public/assets/logos/dark.svg";
 import LightLogo from "@/public/assets/logos/light.svg";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import AuthDropdown from "./auth/dropdown";
+import AuthDropdown from "./auth/user-dropdown";
 import { ThemeToggle } from "./theme-toggle";
 import MobileNav from "./mobile-nav";
+import UserDrawer from "./auth/user-drawer";
 
 export default function Nav() {
   return (
@@ -38,7 +39,10 @@ export default function Nav() {
               <ThemeToggle />
               <AuthDropdown />
             </div>
-            <MobileNav />
+            <div className="flex flex-row items-center gap-4 sm:hidden">
+              <UserDrawer />
+              <MobileNav />
+            </div>
           </div>
         </div>
       </nav>
