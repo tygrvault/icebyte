@@ -12,6 +12,8 @@ import React from "react";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { useAuth } from "./context";
+import pb from "@/lib/pocketbase";
+import { toast } from "sonner";
 
 export default function AuthDialog({
   children,
@@ -144,8 +146,19 @@ export default function AuthDialog({
             )}
             {mode === "reset" && (
               <>
-                <Input id="email" type="email" placeholder="Email" />
-                <Button className="w-full text-md">Send</Button>
+                <Input id="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Button className="w-full text-md" onClick={() => {
+                  toast.promise(pb.collection("users").requestPasswordReset(email), {
+                    loading: "Sending...",
+                    success: (data) => {
+                      setMode("login");
+                      return "If your email is registered, you should receive an email shortly.";
+                    },
+                    error: (err) => {
+                      return "An invalid email was provided. Please try again.";
+                    }
+                  });
+                }}>Send</Button>
               </>
             )}
           </div>

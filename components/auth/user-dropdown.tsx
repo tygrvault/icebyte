@@ -4,12 +4,12 @@ import { useAuth } from "./context";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { AlertTriangle, Cog, FileText, LogOut, Mail, User } from "lucide-react";
 import { Button } from "../ui/button";
-import AuthDialog from "./dialog";
+import AuthDialog from "./auth-dialog";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 import pb from "@/lib/pocketbase";
 
-export default function AuthDropdown() {
+export default function UserDropdown() {
     const { user, avatar, banner, logOut } = useAuth();
     const router = useRouter();
 
