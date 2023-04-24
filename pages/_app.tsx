@@ -10,8 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider enableSystem={true} attribute="class">
-        <Toaster position="bottom-right" className="hidden sm:block" />
-        <Toaster position="top-center" className="block sm:hidden" />
+        <Toaster position="bottom-center" className="hidden sm:flex" />
+        <Toaster position="top-left" className="flex sm:hidden" />
         <AuthProvider>
           <Nav />
           <Component {...pageProps} />
