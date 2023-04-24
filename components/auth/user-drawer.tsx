@@ -1,17 +1,33 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter } from "@/components/ui/drawer";
-import { useState } from "react";
-import { useAuth } from "./context";
-import { Input } from "../ui/input";
-import { toast } from "sonner";
-import pb from "@/lib/pocketbase";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import AuthDrawer from "./auth-drawer";
+import {
+    Drawer,
+    DrawerTrigger,
+    DrawerContent,
+    DrawerHeader,
+    DrawerFooter
+} from "@/components/ui/drawer";
+import {
+    Avatar,
+    AvatarImage,
+    AvatarFallback
+} from "@/components/ui/avatar";
+import {
+    AlertTriangle,
+    Cog,
+    FileText,
+    LogOut,
+    Mail,
+    User
+} from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { AlertTriangle, Cog, FileText, LogOut, Mail, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
+import AuthDrawer from "./auth-drawer";
+import { useAuth } from "./context";
+import pb from "@/lib/pocketbase";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function UserDrawer() {
     const [open, setOpen] = useState(false);

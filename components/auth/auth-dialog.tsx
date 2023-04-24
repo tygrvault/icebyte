@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -5,22 +7,25 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import React from "react";
+import {
+  DialogHeader,
+  DialogFooter
+} from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
-import { useAuth } from "./context";
+import { useAuth } from "@/components/auth/context";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import pb from "@/lib/pocketbase";
+import { X } from "lucide-react";
 import { toast } from "sonner";
+import React from "react";
 
 export default function AuthDialog({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { logIn, register, authStore } = useAuth();
+  const { logIn, register } = useAuth();
 
   const [mode, setMode] = React.useState<"login" | "register" | "reset">("login");
 

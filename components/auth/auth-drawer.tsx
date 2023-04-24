@@ -1,12 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter } from "@/components/ui/drawer";
-import { useState } from "react";
-import { useAuth } from "./context";
-import { Input } from "../ui/input";
-import { toast } from "sonner";
+import {
+    Drawer,
+    DrawerTrigger,
+    DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerDescription,
+    DrawerFooter
+} from "@/components/ui/drawer";
+import { useAuth } from "@/components/auth/context";
+import { Input } from "@/components/ui/input";
 import pb from "@/lib/pocketbase";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function AuthDrawer({
     children,

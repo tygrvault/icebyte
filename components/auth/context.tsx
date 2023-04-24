@@ -1,6 +1,8 @@
-import pb from "@/lib/pocketbase";
+"use client";
+
 import ClientError from "@/types/ClientError";
 import React, { useEffect } from "react";
+import pb from "@/lib/pocketbase";
 import { toast } from "sonner";
 
 export interface AuthSession {

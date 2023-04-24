@@ -1,12 +1,12 @@
-import Link from "next/link";
-import DarkLogo from "@/public/assets/logos/dark.svg";
+import AuthDropdown from "@/components/auth/user-dropdown";
+import { ThemeToggle } from "@/components/theme-toggle";
 import LightLogo from "@/public/assets/logos/light.svg";
-import Image from "next/image";
+import UserDrawer from "@/components/auth/user-drawer";
+import DarkLogo from "@/public/assets/logos/dark.svg";
 import { Button } from "@/components/ui/button";
-import AuthDropdown from "./auth/user-dropdown";
-import { ThemeToggle } from "./theme-toggle";
-import MobileNav from "./mobile-nav";
-import UserDrawer from "./auth/user-drawer";
+import MobileNav from "@/components/mobile-nav";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Nav() {
   return (

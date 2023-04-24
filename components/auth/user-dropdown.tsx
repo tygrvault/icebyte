@@ -1,13 +1,22 @@
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { DropdownMenu, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuItem } from "../ui/dropdown-menu";
-import { useAuth } from "./context";
-import { AspectRatio } from "../ui/aspect-ratio";
+"use client";
+
+import {
+    DropdownMenu,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuSeparator,
+    DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
 import { AlertTriangle, Cog, FileText, LogOut, Mail, User } from "lucide-react";
-import { Button } from "../ui/button";
-import AuthDialog from "./auth-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import AuthDialog from "@/components/auth/auth-dialog";
+import { useAuth } from "@/components/auth/context";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
-import { toast } from "sonner";
 import pb from "@/lib/pocketbase";
+import { toast } from "sonner";
 
 export default function UserDropdown() {
     const { user, avatar, banner, logOut } = useAuth();

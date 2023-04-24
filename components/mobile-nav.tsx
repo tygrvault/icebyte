@@ -1,16 +1,24 @@
 "use client";
 
-import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
-import DarkLogo from "@/public/assets/logos/dark.svg";
+import {
+    Drawer,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger
+} from "@/components/ui/drawer";
 import LightLogo from "@/public/assets/logos/light.svg";
-import { Menu, X } from "lucide-react";
+import DarkLogo from "@/public/assets/logos/dark.svg";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Link, { LinkProps } from "next/link";
-import Image from "next/image";
-import { useState } from "react";
 import { useRouter } from "next/router";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
