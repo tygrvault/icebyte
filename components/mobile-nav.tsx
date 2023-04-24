@@ -11,12 +11,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
-import AuthDrawer from "./auth/drawer";
-import { useAuth } from "./auth/context";
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
-    const { loggedIn, logOut, user } = useAuth();
+
     return (
         <>
             <Drawer open={open} onOpenChange={setOpen}>
@@ -58,38 +56,6 @@ export default function MobileNav() {
                                 Team
                             </Button>
                         </MobileLink>
-                        {loggedIn ? (
-                            <>
-                                <div className="flex flex-row items-center justify-between gap-0 pt-4">
-                                    <hr className="w-full border border-black/20 dark:border-white/20" />
-                                    <p className="px-4 text-primary-500">{user?.email}</p>
-                                    <hr className="w-full border border-black/20 dark:border-white/20" />
-                                </div>
-                                <MobileLink href="/profile" onOpenChange={setOpen}>
-                                    <Button className="w-full text-black dark:text-white" theme="secondary">
-                                        Profile
-                                    </Button>
-                                </MobileLink>
-                                <MobileLink href="/account" onOpenChange={setOpen}>
-                                    <Button className="w-full text-black dark:text-white" theme="secondary">
-                                        Account
-                                    </Button>
-                                </MobileLink>
-                                {/* <hr className="border border-black/20 dark:border-white/20" /> */}
-
-                                <Button className="w-full text-black dark:text-white" theme="secondary" onClick={() => logOut()}>
-                                    Logout
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                <AuthDrawer>
-                                    <Button className="w-full " theme="primary">
-                                        Login
-                                    </Button>
-                                </AuthDrawer>
-                            </>
-                        )}
                     </DrawerFooter >
                 </DrawerContent >
             </Drawer >
