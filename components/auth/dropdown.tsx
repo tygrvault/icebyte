@@ -1,14 +1,17 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenu, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuSeparator, DropdownMenuItem } from "../ui/dropdown-menu";
 import { useAuth } from "./context";
-import Link from "next/link";
 import { AspectRatio } from "../ui/aspect-ratio";
-import { Code, Cog, FileText, LogOut, User } from "lucide-react";
+import { AlertTriangle, Cog, FileText, LogOut, Mail, User } from "lucide-react";
 import { Button } from "../ui/button";
 import AuthDialog from "./dialog";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
+import pb from "@/lib/pocketbase";
 
 export default function AuthDropdown() {
     const { user, avatar, banner, logOut } = useAuth();
+    const router = useRouter();
 
     return (
         <>
@@ -22,6 +25,14 @@ export default function AuthDropdown() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="min-w-[20rem] p-0">
                         <AspectRatio ratio={2 / 1}>
+                            {!user.verified && (
+                                <div className="h-[32px] w-full absolute z-[51] top-0 bg-[#EBCB8B] text-black dark:text-black">
+                                    <div className="flex flex-row items-center justify-start gap-2 max-h-[32px] p-2">
+                                        <AlertTriangle className="w-4 h-4" />
+                                        <p className="text-sm font-semibold">To continue, verify your email address.</p>
+                                    </div>
+                                </div>
+                            )}
                             <img src={banner} alt="banner" className="object-cover w-full h-full" />
                         </AspectRatio>
                         <DropdownMenuLabel className="flex flex-col h-16 px-3 text-xl font-semibold -translate-y-16 min-h-20">
@@ -34,6 +45,7 @@ export default function AuthDropdown() {
                                     <span className="text-black dark:text-white">
                                         {user.name}
                                     </span>
+
                                 </div>
                                 <div>
                                     {/* Badges go here */}
@@ -41,31 +53,39 @@ export default function AuthDropdown() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <Link href="/profile">
-                            <DropdownMenuItem>
-                                <User className="w-4 h-4 mr-2" />
-                                <span>
-                                    Profile
-                                </span>
-                            </DropdownMenuItem>
-                        </Link>
-                        <Link href="/account">
-                            <DropdownMenuItem>
-                                <FileText className="w-4 h-4 mr-2" />
-                                <span>
-                                    Account
-                                </span>
-                            </DropdownMenuItem>
-                        </Link>
+                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/profile")}>
+                            <User className="w-4 h-4 mr-2" />
+                            <span>
+                                Profile
+                            </span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/account")}>
+                            <FileText className="w-4 h-4 mr-2" />
+                            <span>
+                                Account
+                            </span>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <Link href="/settings">
-                            <DropdownMenuItem>
-                                <Cog className="w-4 h-4 mr-2" />
+                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/settings")}>
+                            <Cog className="w-4 h-4 mr-2" />
+                            <span>
+                                Settings
+                            </span>
+                        </DropdownMenuItem>
+                        {!user.verified && (
+                            <DropdownMenuItem onClick={() => {
+                                toast.promise(pb.collection("users").requestVerification(user.email), {
+                                    loading: "Sending verification email...",
+                                    success: "Verification email sent!",
+                                    error: "Failed to send verification email."
+                                })
+                            }}>
+                                <Mail className="w-4 h-4 mr-2" />
                                 <span>
-                                    Settings
+                                    Request verification email
                                 </span>
                             </DropdownMenuItem>
-                        </Link>
+                        )}
                         <DropdownMenuItem onClick={() => logOut()}>
                             <LogOut className="w-4 h-4 mr-2" />
                             <span>
