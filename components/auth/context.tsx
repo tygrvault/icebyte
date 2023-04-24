@@ -1,5 +1,5 @@
 import pb from "@/lib/pocketbase";
-import { RecordAuthResponse, Record } from "pocketbase";
+import ClientError from "@/types/ClientError";
 import React, { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -75,16 +75,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
 
     const logIn = async (email: string, password: string) => {
-        toast.promise(pb.collection("users").authWithPassword(email, password), {
-            loading: "Logging in...",
-            success: (data: RecordAuthResponse<Record>) => {
-                setLoggedIn(true);
-                setUser(pb.authStore.model);
-                return (`Welcome back, ${data.record.username}!`);
-            },
-            error: (err) => {
-                return "Failed to authenticate. Please check your credentials."
-            }
+        await pb.collection("users").authWithPassword(email, password).then((record) => {
+            setLoggedIn(true);
+            setUser(pb.authStore.model);
+            toast.success("Success!", {
+                description: `Welcome back, ${record.record.username}!`
+            });
+        }).catch((err: ClientError) => {
+            console.error(JSON.stringify(err, null, 2));
+            let title = "Invalid ";
+            if (err.response.message === "Failed to authenticate.") title += "credentials."
+            if (err.response.data.identity && err.response.data.identity.code === "validation_required") title += "email"
+            if (err.response.data.password && err.response.data.password.code === "validation_required") title.length <= 8 ? title += "password." : title += " and password."
+
+            toast.error(title, {
+                description: err.response.message
+            });
         });
     }
 
@@ -101,47 +107,48 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         password: string,
         passwordConfirm: string,
     ) => {
-        toast.promise(pb.collection("users").create({
-            name,
-            username,
-            email,
-            password,
-            passwordConfirm
-        }), {
-            loading: "Creating your account...",
-            success: (data) => {
-                console.log(data);
-                return (`Success. Check your email for a confirmation link.`);
-            },
-            error: (err) => {
-                if (err.response.data) {
-                    if (err.response.data.email) {
-                        return err.response.data.email.message === "Cannot be blank." ? "Email cannot be blank" : err.response.data.email.message;
-                    }
+        async function createUser() {
+            if (!name || name.length < 2) return toast.error("Missing required field!", { description: "Please enter a valid name with at least 2 characters." });
+            if (!username || username.length < 3) return toast.error("Missing required field!", { description: "Please enter a valid username with at least 3 characters." });
+            if (!email || !email.includes("@")) return toast.error("Missing required field!", { description: "Please enter a valid email." });
+            if (!password || password.length < 8 || password.length > 72) return toast.error("Missing required field!", { description: "Please enter a valid password between 3 and 72 characters long." });
+            if (password !== passwordConfirm) return toast.error("Passwords mismatch!", { description: "The passwords do not match. Please try again." });
 
-                    if (err.response.data.password) {
-                        return "Password " + err.response.data.password.message.toLowerCase();
-                    }
-                } else {
-                    return "Failed to create your account. Please try again later."
-                }
-            }
-        });
+            await pb.collection("users").create({
+                name,
+                username,
+                email,
+                password,
+                passwordConfirm
+            }).then(async () => {
+                await pb.collection("users").requestVerification(email);
+                toast.success("Success!", {
+                    description: "Please check your email for a verification link."
+                });
+            }).catch((err: ClientError) => {
+                let e = Object.values(err.response.data)[0];
+                toast.error("Something went wrong sending your request.", {
+                    description: e.message
+                });
+            });
+        }
+
+        await createUser();
     }
 
     async function update() {
-        toast.promise(pb.collection("users").authRefresh(),
-            {
-                loading: "Syncing...",
-                success: (data) => {
-                    setUser(data.record);
-                    return "Successfully synced with database.";
-                },
-                error: (err) => {
-                    return "Failed to update. Please try again later."
-                }
-            }
-        )
+        await pb.collection("users").authRefresh().then((response) => {
+            setUser(response.record);
+            setAvatar(response.record?.avatar ?
+                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.avatar}` :
+                `https://api.dicebear.com/6.x/identicon/svg?seed=${response.record?.email}&scale=60&radius=50&backgroundColor=ffffff`);
+
+            setBanner(response.record?.banner ?
+                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.banner}` :
+                `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
+        }).catch((err) => {
+            console.error(err);
+        })
     }
 
     async function uploadAvatar(file: File) {
@@ -223,6 +230,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         setMounted(true);
 
+        if (pb.authStore.model) {
+            pb.collection("users").subscribe(pb.authStore.model.id, () => {
+                update();
+            });
+        }
+
         setLoggedIn(pb.authStore.isValid);
         setUser(pb.authStore.model);
 
@@ -234,7 +247,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.banner}` :
             `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
 
-        return () => setMounted(false);
+        return () => {
+            pb.collection("users").unsubscribe("*");
+            setMounted(false)
+        }
+
     }, [pb.authStore.isValid]);
 
     const value = React.useMemo(() => ({
