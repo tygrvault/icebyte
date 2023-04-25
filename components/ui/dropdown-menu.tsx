@@ -27,7 +27,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     <DropdownMenuPrimitive.SubTrigger
         ref={ref}
         className={cn(
-            "flex cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm text-primary-500 hover:text-black focus:text-black dark:hover:text-white dark:focus:text-white transition-colors font-medium outline-none hover:bg-primary-200 focus:bg-primary-200 data-[state=open]:bg-primary-200 data-[state=open]:text-black dark:focus:bg-primary-700 dark:data-[state=open]:bg-primary-700 dark:data-[state=open]:text-white",
+            "flex cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm text-primary-500 font-medium outline-none hover:text-black hover:active:bg-primary-300/50 focus:text-black focus:bg-primary-200 focus:active:bg-primary-300/50  dark:hover:text-white dark:hover:active:bg-primary-700/50 dark:focus:text-white dark:focus:bg-primary-700 dark:focus:active:bg-primary-700/50 transition-colors data-[state=open]:bg-primary-200 data-[state=open]:text-black  dark:data-[state=open]:bg-primary-700 dark:data-[state=open]:text-white",
             inset && "pl-8",
             className
         )}
@@ -83,7 +83,7 @@ const DropdownMenuItem = React.forwardRef<
     <DropdownMenuPrimitive.Item
         ref={ref}
         className={cn(
-            "relative flex cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm font-medium outline-none focus:bg-black/20 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-primary-700 text-primary-500 hover:text-black focus:text-black dark:text-primary-500 dark:hover:text-white dark:focus:text-white transition-colors",
+            "relative flex cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm text-primary-500 dark:text-primary-500 font-medium outline-none hover:text-black hover:active:bg-primary-300/50 focus:text-black focus:bg-primary-200 focus:active:bg-primary-300/50  dark:hover:text-white dark:hover:active:bg-primary-700/50 dark:focus:text-white dark:focus:bg-primary-700 dark:focus:active:bg-primary-700/50 transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             inset && "pl-8",
             className
         )}
