@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { DialogProps } from "@radix-ui/react-alert-dialog"
 import { Laptop, Moon, SunMedium, Search as SearchIcon, File } from "lucide-react"
 import { useTheme } from "next-themes"
-import { allDocuments } from "contentlayer/generated"
+// import { allDocuments } from "contentlayer/generated"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -53,7 +53,7 @@ export function Search({ ...props }: DialogProps) {
         {...props}
       >
         <div className="flex flex-row items-center justify-start">
-          <SearchIcon className="mr-2 h-4 w-4 shrink-0" />
+          <SearchIcon className="w-4 h-4 mr-2 shrink-0" />
           <span>Search...</span>
         </div>
       </Button>
@@ -61,7 +61,7 @@ export function Search({ ...props }: DialogProps) {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Articles">
+          {/* <CommandGroup heading="Articles">
             {allDocuments
               .map((doc) => (
                 <CommandItem
@@ -70,25 +70,25 @@ export function Search({ ...props }: DialogProps) {
                     runCommand(() => router.push(doc.slug))
                   }}
                 >
-                  <div className="mr-2 flex items-center justify-center">
-                    <File className="h-3 w-3" />
+                  <div className="flex items-center justify-center mr-2">
+                    <File className="w-3 h-3" />
                   </div>
                   {doc.title}
                 </CommandItem>
               ))}
-          </CommandGroup>
+          </CommandGroup> */}
           <CommandSeparator />
           <CommandGroup heading="Theme" >
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <SunMedium className="mr-2 h-4 w-4" />
+              <SunMedium className="w-4 h-4 mr-2" />
               Light
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <Moon className="mr-2 h-4 w-4" />
+              <Moon className="w-4 h-4 mr-2" />
               Dark
             </CommandItem>
             <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <Laptop className="mr-2 h-4 w-4" />
+              <Laptop className="w-4 h-4 mr-2" />
               System
             </CommandItem>
           </CommandGroup>
