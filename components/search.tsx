@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { DialogProps } from "@radix-ui/react-alert-dialog"
 import { Laptop, Moon, SunMedium, Search as SearchIcon, File } from "lucide-react"
 import { useTheme } from "next-themes"
-import { allDocuments } from "@/.contentlayer/generated"
+import { allDocuments } from "contentlayer/generated"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
