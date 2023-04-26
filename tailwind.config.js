@@ -27,6 +27,9 @@ module.exports = {
       },
       fontSize: {
         ...defaultTheme.fontSize
+      },
+      screens: {
+        "xs": "440px"
       }
     },
   },
