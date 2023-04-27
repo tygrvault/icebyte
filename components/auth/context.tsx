@@ -89,6 +89,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             console.error(JSON.stringify(err, null, 2));
             let title = "Invalid ";
             if (err.response.message === "Failed to authenticate.") title += "credentials."
+            if (!err.response.data) return toast.error("An unexpected error occured!", {
+                description: "Check the console for more details."
+            });
             if (err.response.data.identity && err.response.data.identity.code === "validation_required") title += "email"
             if (err.response.data.password && err.response.data.password.code === "validation_required") title.length <= 8 ? title += "password." : title += " and password."
 
@@ -118,26 +121,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if (!password || password.length < 8 || password.length > 72) return toast.error("Missing required field!", { description: "Please enter a valid password between 3 and 72 characters long." });
             if (password !== passwordConfirm) return toast.error("Passwords mismatch!", { description: "The passwords do not match. Please try again." });
 
-            await pb.collection("users").create({
-                name,
-                username,
-                email,
-                password,
-                passwordConfirm
-            }).then(async () => {
-                await pb.collection("users").requestVerification(email);
-                toast.success("Success!", {
-                    description: "Please check your email for a verification link."
-                });
-            }).catch((err: ClientError) => {
-                if (err.response.data) {
-                    let e = Object.values(err.response.data)[0];
-
-                    toast.error("Something went wrong sending your request.", {
-                        description: e.message
+                await pb.collection("users").create({
+                    name,
+                    username,
+                    email,
+                    password,
+                    passwordConfirm
+                }).then(async () => {
+                    await pb.collection("users").requestVerification(email);
+                    toast.success("Success!", {
+                        description: "Please check your email for a verification link."
                     });
-                }
-            });
+                }).catch((err: ClientError) => {
+                    if (err.response.data) {
+                        let e = Object.values(err.response.data)[0];
+
+                        toast.error("Something went wrong sending your request.", {
+                            description: e.message
+                        });
+                    }
+                });
         }
 
         await createUser();
@@ -271,7 +274,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setMounted(false)
         }
 
-        // Ignoring the line as isValid is used to re-run the effect after every re-render of the component.
+        // Ignoring the line with reason: isValid is used to re-run the effect after every re-render of the component.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pb.authStore.isValid]);
 
