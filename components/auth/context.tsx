@@ -23,6 +23,7 @@ export interface AuthSession {
         password: string,
         passwordConfirm: string,
     ) => Promise<void>;
+    resetPassword: (email: string) => void;
     update: () => Promise<void>;
 
     uploadAvatar: (file: File) => Promise<void>;
@@ -51,6 +52,7 @@ export const AuthContext = React.createContext<AuthSession>({
     logIn: async () => { },
     logOut: () => { },
     register: async () => { },
+    resetPassword: () => { },
     update: async () => { },
 
     uploadAvatar: async () => { },
@@ -141,6 +143,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await createUser();
     }
 
+    function resetPassword(email: string) {
+        toast.promise(pb.collection("users").requestPasswordReset(email), {
+            loading: "Sending...",
+            success: (data) => {
+                return "If your email is registered, you should receive an email shortly.";
+            },
+            error: (err) => {
+                return "An invalid email was provided. Please try again.";
+            }
+        });
+    }
+
     async function update() {
         await pb.collection("users").authRefresh().then((response) => {
             setUser(response.record);
@@ -220,16 +234,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const deleteAccount = useCallback(async () => {
         toast.promise(pb.collection("users").delete(pb.authStore.model?.id as string),
-        {
-            loading: "Deleting...",
-            success: (data) => {
-                logOut();
-                return "Successfully deleted account. We'll miss you!";
-            },
-            error: (err) => {
-                return "Failed to delete account. Please try again later."
-            }
-        })
+            {
+                loading: "Deleting...",
+                success: (data) => {
+                    logOut();
+                    return "Successfully deleted account. We'll miss you!";
+                },
+                error: (err) => {
+                    return "Failed to delete account. Please try again later."
+                }
+            })
     }, []);
 
     useEffect(() => {
@@ -256,9 +270,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             pb.collection("users").unsubscribe("*");
             setMounted(false)
         }
-    
-    // Ignoring the line as isValid is used to re-run the effect after every re-render of the component.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // Ignoring the line as isValid is used to re-run the effect after every re-render of the component.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pb.authStore.isValid]);
 
     const value = React.useMemo(() => ({
@@ -272,6 +286,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         logIn,
         logOut,
         register,
+        resetPassword,
         update,
 
         uploadAvatar,
