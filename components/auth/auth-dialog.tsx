@@ -34,6 +34,35 @@ export default function AuthDialog({
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
+  React.useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      console.log(e.key, mode)
+      if (e.key === "Enter") {
+        e.preventDefault()
+        switch (mode) {
+          case "login": {
+            logIn(email, password);
+            break;
+          }
+
+          case "register": {
+            register(name, username, email, password, confirmPassword);
+            break;
+          }
+
+          case "reset": {
+            resetPassword(email);
+            setMode("login");
+            break;
+          }
+        }
+      }
+    }
+
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [confirmPassword, email, logIn, mode, name, password, register, resetPassword, username])
+
   return (
     <>
       <Dialog>
