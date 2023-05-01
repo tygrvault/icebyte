@@ -7,7 +7,8 @@
     "build": "INIT_CWD=$PWD next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel": "vercel"
+    "vercel": "vercel",
+    "pocketbase": "./lib/pocketbase/pocketbase"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.3",
