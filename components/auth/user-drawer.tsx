@@ -7,19 +7,8 @@ import {
     DrawerHeader,
     DrawerFooter
 } from "@/components/ui/drawer";
-import {
-    Avatar,
-    AvatarImage,
-    AvatarFallback
-} from "@/components/ui/avatar";
-import {
-    AlertTriangle,
-    Cog,
-    FileText,
-    LogOut,
-    Mail,
-    User
-} from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { AlertTriangle, FileText, LogOut, Mail, User } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
@@ -28,6 +17,7 @@ import { useAuth } from "./context";
 import pb from "@/lib/pocketbase";
 import { useState } from "react";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function UserDrawer() {
     const [open, setOpen] = useState(false);
@@ -63,7 +53,7 @@ export default function UserDrawer() {
                                         </div>
                                     </div>
                                 )}
-                                <img src={banner} alt="banner" className="object-cover w-full h-full" />
+                                <Image src={banner} alt="banner" fill className="object-cover w-full h-full" />
                             </AspectRatio>
                         </DrawerHeader>
                         <div className="flex flex-col h-[4.4rem] px-3 text-xl font-semibold -translate-y-14 min-h-20">
@@ -96,13 +86,7 @@ export default function UserDrawer() {
                                     Account
                                 </span>
                             </Button>
-                            <hr className="w-full border-black/10 dark:border-white/10" />
-                            <Button disabled={!user.verified} onClick={() => redirect("/settings")} className="flex flex-row items-center rounded-none hover:px-6" variant="ghost">
-                                <Cog className="w-4 h-4 mr-2" />
-                                <span>
-                                    Settings
-                                </span>
-                            </Button>
+                            {/* <hr className="w-full border-black/10 dark:border-white/10" /> */}
                             {!user.verified && (
                                 <Button variant="ghost" className="flex flex-row items-center rounded-none" onClick={() => {
                                     toast.promise(pb.collection("users").requestVerification(user.email), {

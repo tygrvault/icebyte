@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
-import { AlertTriangle, Cog, FileText, LogOut, Mail, User } from "lucide-react";
+import { AlertTriangle, FileText, LogOut, Mail, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import AuthDialog from "@/components/auth/auth-dialog";
@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import pb from "@/lib/pocketbase";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function UserDropdown() {
     const { user, avatar, banner, logOut } = useAuth();
@@ -42,7 +43,7 @@ export default function UserDropdown() {
                                     </div>
                                 </div>
                             )}
-                            <img src={banner} alt="banner" className="object-cover w-full h-full" />
+                            <Image src={banner} alt="banner" fill className="object-cover w-full h-full" />
                         </AspectRatio>
                         <DropdownMenuLabel className="flex flex-col h-16 px-3 text-xl font-semibold -translate-y-16 min-h-20">
                             <Avatar className="w-20 h-20 mb-2 border border-black/10 dark:border-white/10">
@@ -62,25 +63,19 @@ export default function UserDropdown() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/profile")}>
+                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/profile")} className="disabled:opacity-50">
                             <User className="w-4 h-4 mr-2" />
                             <span>
                                 Profile
                             </span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/account")}>
+                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/account")} className="disabled:opacity-50">
                             <FileText className="w-4 h-4 mr-2" />
                             <span>
                                 Account
                             </span>
                         </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/settings")}>
-                            <Cog className="w-4 h-4 mr-2" />
-                            <span>
-                                Settings
-                            </span>
-                        </DropdownMenuItem>
+                        {/* <DropdownMenuSeparator /> */}
                         {!user.verified && (
                             <DropdownMenuItem onClick={() => {
                                 toast.promise(pb.collection("users").requestVerification(user.email), {
