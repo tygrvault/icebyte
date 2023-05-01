@@ -15,7 +15,23 @@ const nextConfig = {
                 permanent: true,
             },
         ];
-    }
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
+            {
+                protocol: 'https',
+                hostname: 'icebyte.tygr.dev',
+            },
+            {
+                protocol: 'https',
+                hostname: 'auth.icebyte.tygr.dev',
+            },
+        ],
+    },
 };
 
 module.exports = withContentlayer(nextConfig);
