@@ -12,9 +12,8 @@ import {
 } from "@/components/ui/drawer";
 import { useAuth } from "@/components/auth/context";
 import { Input } from "@/components/ui/input";
-import pb from "@/lib/pocketbase";
 import { useState } from "react";
-import { toast } from "sonner";
+import React from "react";
 
 export default function AuthDrawer({
     children,
@@ -22,7 +21,7 @@ export default function AuthDrawer({
     children: React.ReactNode;
 }) {
     const [open, setOpen] = useState(false);
-    const { logIn, register, authStore } = useAuth();
+    const { logIn, register, resetPassword } = useAuth();
 
     const [mode, setMode] = useState<"login" | "register" | "reset">("login");
 
@@ -33,6 +32,20 @@ export default function AuthDrawer({
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    React.useEffect(() => {
+        const down = (e: KeyboardEvent) => {
+            if (e.key === "Enter") {
+                e.preventDefault()
+                if (mode === "login") logIn(email, password)
+                if (mode === "register") register(name, username, email, password, confirmPassword)
+                if (mode === "reset") resetPassword(email)
+            }
+        }
+
+        document.addEventListener("keydown", down)
+        return () => document.removeEventListener("keydown", down)
+    }, [confirmPassword, email, logIn, mode, name, password, register, resetPassword, username])
+
     return (
         <>
             <Drawer open={open} onOpenChange={setOpen}>
@@ -42,13 +55,13 @@ export default function AuthDrawer({
                 <DrawerContent position="bottom" size="content" className="p-0 border-t border-black/10 dark:border-white/10" closeButton={true}>
                     <DrawerHeader className="p-4">
                         <DrawerTitle className="flex flex-row items-center justify-center text-4xl font-extrabold">
-                            {mode === "login" && "Login"}
+                            {mode === "login" && "Log in"}
                             {mode === "register" && "Register"}
                             {mode === "reset" && "Reset password"}
                         </DrawerTitle>
                         <DrawerDescription>
-                            {mode === "login" && "Please log in to your Pixel account."}
-                            {mode === "register" && "Register a Pixel account and join the club!"}
+                            {mode === "login" && "Please log in to your Icebyte account."}
+                            {mode === "register" && "Register a Icebyte account and join the club!"}
                             {mode === "reset" && "Please enter your email address to reset your password."}
                         </DrawerDescription>
                     </DrawerHeader>
@@ -152,18 +165,7 @@ export default function AuthDrawer({
                         {mode === "reset" && (
                             <>
                                 <Input id="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                                <Button className="w-full text-md" onClick={() => {
-                                    toast.promise(pb.collection("users").requestPasswordReset(email), {
-                                        loading: "Sending...",
-                                        success: (data) => {
-                                            setMode("login");
-                                            return "If your email is registered, you should receive an email shortly.";
-                                        },
-                                        error: (err) => {
-                                            return "An invalid email was provided. Please try again.";
-                                        }
-                                    });
-                                }}>Send</Button>
+                                <Button className="w-full text-md" onClick={() => resetPassword(email)}>Send</Button>
                             </>
                         )}
                     </div>

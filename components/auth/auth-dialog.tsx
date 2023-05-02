@@ -36,26 +36,11 @@ export default function AuthDialog({
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      console.log(e.key, mode)
       if (e.key === "Enter") {
         e.preventDefault()
-        switch (mode) {
-          case "login": {
-            logIn(email, password);
-            break;
-          }
-
-          case "register": {
-            register(name, username, email, password, confirmPassword);
-            break;
-          }
-
-          case "reset": {
-            resetPassword(email);
-            setMode("login");
-            break;
-          }
-        }
+        if (mode === "login") logIn(email, password)
+        if (mode === "register") register(name, username, email, password, confirmPassword)
+        if (mode === "reset") resetPassword(email)
       }
     }
 
@@ -70,13 +55,13 @@ export default function AuthDialog({
         <DialogContent className="sm:max-w-[425px] p-0">
           <DialogHeader className="p-4">
             <DialogTitle className="text-4xl font-extrabold text-center">
-              {mode === "login" && "Login"}
+              {mode === "login" && "Log in"}
               {mode === "register" && "Register"}
               {mode === "reset" && "Reset password"}
             </DialogTitle>
             <DialogDescription className="m-0 text-center text">
-              {mode === "login" && "Please log in to your Pixel account."}
-              {mode === "register" && "Register a Pixel account and join the club!"}
+              {mode === "login" && "Please log in to your Icebyte account."}
+              {mode === "register" && "Register an Icebyte account and join the club!"}
               {mode === "reset" && "Please enter your email address to reset your password."}
             </DialogDescription>
           </DialogHeader>
