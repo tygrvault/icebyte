@@ -25,6 +25,7 @@ export default function AuthDialog({
 }) {
   const { logIn, register, resetPassword } = useAuth();
 
+  const [open, setOpen] = React.useState(false);
   const [mode, setMode] = React.useState<"login" | "register" | "reset">("login");
 
   const [name, setName] = React.useState("");
@@ -36,7 +37,7 @@ export default function AuthDialog({
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && open) {
         e.preventDefault()
         if (mode === "login") logIn(email, password)
         if (mode === "register") register(name, username, email, password, confirmPassword)
@@ -50,8 +51,8 @@ export default function AuthDialog({
 
   return (
     <>
-      <Dialog>
-        <DialogTrigger>{children}</DialogTrigger>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger>{children}</ DialogTrigger>
         <DialogContent className="sm:max-w-[425px] p-0">
           <DialogHeader className="p-4">
             <DialogTitle className="text-4xl font-extrabold text-center">

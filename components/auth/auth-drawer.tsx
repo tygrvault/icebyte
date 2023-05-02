@@ -34,7 +34,7 @@ export default function AuthDrawer({
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
-            if (e.key === "Enter") {
+            if (e.key === "Enter" && open) {
                 e.preventDefault()
                 if (mode === "login") logIn(email, password)
                 if (mode === "register") register(name, username, email, password, confirmPassword)
