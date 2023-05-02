@@ -18,6 +18,7 @@ import pb from "@/lib/pocketbase";
 import { useState } from "react";
 import { toast } from "sonner";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UserDrawer() {
     const [open, setOpen] = useState(false);
@@ -49,7 +50,7 @@ export default function UserDrawer() {
                                     <div className="h-[32px] w-full absolute z-[51] top-0 bg-[#EBCB8B] text-black dark:text-black">
                                         <div className="flex flex-row items-center rounded-none justify-start gap-2 max-h-[32px] p-2">
                                             <AlertTriangle className="w-4 h-4" />
-                                            <p className="text-sm font-semibold">To continue, verify your email address.</p>
+                                            <p className="text-sm font-semibold">Please check your email for a verification link.</p>
                                         </div>
                                     </div>
                                 )}
@@ -66,7 +67,6 @@ export default function UserDrawer() {
                                     <span className="text-black dark:text-white">
                                         {user.name}
                                     </span>
-
                                 </div>
                                 <div>
                                     {/* Badges go here */}
@@ -74,35 +74,24 @@ export default function UserDrawer() {
                             </div>
                         </div>
                         <DrawerFooter className="flex flex-col text-center border-t sm:flex-col sm:justify-center border-black/20 dark:border-white/20">
-                            <Button disabled={!user.verified} onClick={() => redirect("/profile")} className="flex flex-row items-center rounded-none hover:px-6" variant="ghost">
-                                <User className="w-4 h-4 mr-2" />
-                                <span>
-                                    Profile
-                                </span>
-                            </Button>
-                            <Button disabled={!user.verified} onClick={() => redirect("/account")} className="flex flex-row items-center rounded-none hover:px-6" variant="ghost">
-                                <FileText className="w-4 h-4 mr-2" />
-                                <span>
-                                    Account
-                                </span>
-                            </Button>
-                            {/* <hr className="w-full border-black/10 dark:border-white/10" /> */}
-                            {!user.verified && (
-                                <Button variant="ghost" className="flex flex-row items-center rounded-none" onClick={() => {
-                                    toast.promise(pb.collection("users").requestVerification(user.email), {
-                                        loading: "Sending verification email...",
-                                        success: "Verification email sent!",
-                                        error: "Failed to send verification email."
-                                    })
-                                }}>
-                                    <Mail className="w-4 h-4 mr-2" />
+                            <Link href="/profile">
+                                <Button className="flex flex-row items-center w-full rounded-none" variant="ghost">
+                                    <User className="w-4 h-4 mr-2" />
                                     <span>
-                                        Request verification email
+                                        Profile
                                     </span>
                                 </Button>
-                            )}
+                            </Link>
+                            <Link href="/account">
+                                <Button className="flex flex-row items-center w-full rounded-none" variant="ghost">
+                                    <FileText className="w-4 h-4 mr-2" />
+                                    <span>
+                                        Account
+                                    </span>
+                                </Button>
+                            </Link>
                             <hr className="w-full border-black/10 dark:border-white/10" />
-                            <Button className="flex flex-row items-center rounded-none hover:px-6" variant="ghost" onClick={() => logOut()}>
+                            <Button className="flex flex-row items-center rounded-none" variant="ghost" onClick={() => logOut()}>
                                 <LogOut className="w-4 h-4 mr-2" />
                                 <span>
                                     Log out
