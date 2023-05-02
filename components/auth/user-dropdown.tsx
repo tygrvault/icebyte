@@ -8,20 +8,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
-import { AlertTriangle, FileText, LogOut, Mail, User } from "lucide-react";
+import { AlertTriangle, FileText, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import AuthDialog from "@/components/auth/auth-dialog";
 import { useAuth } from "@/components/auth/context";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/router";
-import pb from "@/lib/pocketbase";
-import { toast } from "sonner";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UserDropdown() {
     const { user, avatar, banner, logOut } = useAuth();
-    const router = useRouter();
 
     return (
         <>
@@ -33,13 +30,13 @@ export default function UserDropdown() {
                             <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="min-w-[20rem] p-0">
+                    <DropdownMenuContent className="min-w-[22rem] p-0">
                         <AspectRatio ratio={2 / 1}>
                             {!user.verified && (
                                 <div className="h-[32px] w-full absolute z-[51] top-0 bg-[#EBCB8B] text-black dark:text-black">
                                     <div className="flex flex-row items-center justify-start gap-2 max-h-[32px] p-2">
                                         <AlertTriangle className="w-4 h-4" />
-                                        <p className="text-sm font-semibold">To continue, verify your email address.</p>
+                                        <p className="text-sm font-semibold">Please check your email for a verification link.</p>
                                     </div>
                                 </div>
                             )}
@@ -55,7 +52,6 @@ export default function UserDropdown() {
                                     <span className="text-black dark:text-white">
                                         {user.name}
                                     </span>
-
                                 </div>
                                 <div>
                                     {/* Badges go here */}
@@ -63,33 +59,25 @@ export default function UserDropdown() {
                             </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/profile")} className="disabled:opacity-50">
-                            <User className="w-4 h-4 mr-2" />
-                            <span>
-                                Profile
-                            </span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem disabled={!user.verified} onClick={() => router.push("/account")} className="disabled:opacity-50">
-                            <FileText className="w-4 h-4 mr-2" />
-                            <span>
-                                Account
-                            </span>
-                        </DropdownMenuItem>
-                        {/* <DropdownMenuSeparator /> */}
-                        {!user.verified && (
-                            <DropdownMenuItem onClick={() => {
-                                toast.promise(pb.collection("users").requestVerification(user.email), {
-                                    loading: "Sending verification email...",
-                                    success: "Verification email sent!",
-                                    error: "Failed to send verification email."
-                                })
-                            }}>
-                                <Mail className="w-4 h-4 mr-2" />
+
+                        <Link href="/profile">
+                            <DropdownMenuItem>
+                                <User className="w-4 h-4 mr-2" />
                                 <span>
-                                    Request verification email
+                                    Profile
                                 </span>
                             </DropdownMenuItem>
-                        )}
+                        </Link>
+
+                        <Link href="/account">
+                            <DropdownMenuItem>
+                                <FileText className="w-4 h-4 mr-2" />
+                                <span>
+                                    Account
+                                </span>
+                            </DropdownMenuItem>
+                        </Link>
+
                         <DropdownMenuItem onClick={() => logOut()}>
                             <LogOut className="w-4 h-4 mr-2" />
                             <span>
