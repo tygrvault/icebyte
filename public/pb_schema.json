@@ -25,11 +25,10 @@
         "required": false,
         "options": {
           "maxSelect": 1,
-          "maxSize": 5242880,
+          "maxSize": 12582912,
           "mimeTypes": [
             "image/jpeg",
             "image/png",
-            "image/svg+xml",
             "image/gif",
             "image/webp"
           ],
@@ -52,6 +51,25 @@
         "system": false,
         "required": false,
         "options": {}
+      },
+      {
+        "id": "iko3vue1",
+        "name": "banner",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 12582912,
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/gif"
+          ],
+          "thumbs": [],
+          "protected": false
+        }
       }
     ],
     "indexes": [],
