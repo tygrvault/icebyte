@@ -23,8 +23,11 @@ export interface AuthSession {
         password: string,
         passwordConfirm: string,
     ) => Promise<void>;
-    resetPassword: (email: string) => void;
     update: () => Promise<void>;
+
+    resetPassword: (email: string) => void;
+    changePassword: (oldPassword: string, newPassword: string, newPasswordConfirm: string) => void;
+    requestEmailChange: (newEmail: string) => void;
 
     uploadAvatar: (file: File) => Promise<void>;
     removeAvatar: () => Promise<void>;
@@ -43,7 +46,7 @@ export const AuthContext = React.createContext<AuthSession>({
 
     avatar: pb.authStore.model?.avatar ?
         `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.avatar}` :
-        `https://api.dicebear.com/6.x/identicon/svg?seed=${pb.authStore.model?.email}&scale=60&radius=50&backgroundColor=ffffff`,
+        `${process.env.NEXT_PUBLIC_URL}/assets/auth/avatar.jpg`,
 
     banner: pb.authStore.model?.banner ?
         `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.banner}` :
@@ -52,8 +55,11 @@ export const AuthContext = React.createContext<AuthSession>({
     logIn: async () => { },
     logOut: () => { },
     register: async () => { },
-    resetPassword: () => { },
     update: async () => { },
+
+    resetPassword: () => { },
+    changePassword: () => { },
+    requestEmailChange: () => { },
 
     uploadAvatar: async () => { },
     removeAvatar: async () => { },
@@ -72,7 +78,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = React.useState(pb.authStore.model);
     const [avatar, setAvatar] = React.useState(pb.authStore.model?.avatar ?
         `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.avatar}` :
-        `https://api.dicebear.com/6.x/identicon/svg?seed=${pb.authStore.model?.email}&scale=60&radius=50&backgroundColor=ffffff`);
+        `${process.env.NEXT_PUBLIC_URL}/assets/auth/avatar.jpg`);
 
     const [banner, setBanner] = React.useState(pb.authStore.model?.banner ?
         `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.banner}` :
@@ -121,29 +127,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             if (!password || password.length < 8 || password.length > 72) return toast.error("Missing required field!", { description: "Please enter a valid password between 3 and 72 characters long." });
             if (password !== passwordConfirm) return toast.error("Passwords mismatch!", { description: "The passwords do not match. Please try again." });
 
-                await pb.collection("users").create({
-                    name,
-                    username,
-                    email,
-                    password,
-                    passwordConfirm
-                }).then(async () => {
-                    await pb.collection("users").requestVerification(email);
-                    toast.success("Success!", {
-                        description: "Please check your email for a verification link."
-                    });
-                }).catch((err: ClientError) => {
-                    if (err.response.data) {
-                        let e = Object.values(err.response.data)[0];
-
-                        toast.error("Something went wrong sending your request.", {
-                            description: e.message
-                        });
-                    }
+            await pb.collection("users").create({
+                name,
+                username,
+                email,
+                password,
+                passwordConfirm
+            }).then(async () => {
+                await pb.collection("users").requestVerification(email);
+                toast.success("Success!", {
+                    description: "Please check your email for a verification link."
                 });
+            }).catch((err: ClientError) => {
+                if (err.response.data) {
+                    let e = Object.values(err.response.data)[0];
+
+                    toast.error("Something went wrong sending your request.", {
+                        description: e.message
+                    });
+                }
+            });
         }
 
         await createUser();
+    }
+
+    async function update() {
+        await pb.collection("users").authRefresh().then((response) => {
+            setUser(response.record);
+            setAvatar(response.record?.avatar ?
+                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.avatar}` :
+                `${process.env.NEXT_PUBLIC_URL}/assets/auth/avatar.jpg`);
+
+            setBanner(response.record?.banner ?
+                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.banner}` :
+                `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
+        }).catch((err) => {
+            console.error(err);
+        })
     }
 
     function resetPassword(email: string) {
@@ -158,20 +179,39 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
     }
 
-    async function update() {
-        await pb.collection("users").authRefresh().then((response) => {
-            setUser(response.record);
-            setAvatar(response.record?.avatar ?
-                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.avatar}` :
-                `https://api.dicebear.com/6.x/identicon/svg?seed=${response.record?.email}&scale=60&radius=50&backgroundColor=ffffff`);
+    function changePassword(oldPassword: string, newPassword: string, newPasswordConfirm: string) {
+        const formData = new FormData();
+        formData.append("oldPassword", oldPassword);
+        formData.append("password", newPassword);
+        formData.append("passwordConfirm", newPasswordConfirm);
 
-            setBanner(response.record?.banner ?
-                `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${response.record.id}/${response.record.banner}` :
-                `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
+        pb.collection("users").update(user?.id as string, formData).then(() => {
+            toast.success("Success!", {
+                description: "Your password has been changed. Please log in again."
+            });
+            setUser(null);
+            pb.authStore.clear();
         }).catch((err) => {
             console.error(err);
-        })
+            toast.error("Something went wrong!", {
+                description: "Check the console for more details."
+            });
+        });
     }
+
+    function requestEmailChange(newEmail: string) {
+        toast.promise(pb.collection("users").requestEmailChange(newEmail), {
+            loading: "Sending...",
+            success: (data) => {
+                return "Check your new email for a verification link.";
+            },
+            error: (err) => {
+                return "Failed to send email. Please try again.";
+            }
+        });
+    }
+
+
 
     async function uploadAvatar(file: File) {
         const formData = new FormData();
@@ -195,13 +235,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             {
                 loading: "Removing...",
                 success: (data) => {
-                    setAvatar(`https://api.dicebear.com/6.x/identicon/svg?seed=${data.email}&scale=60&radius=50&backgroundColor=ffffff`);
+                    setAvatar(`${process.env.NEXT_PUBLIC_URL}/assets/auth/avatar.jpg`);
                     return "Successfully removed avatar.";
                 },
                 error: (err) => {
                     return "Failed to remove avatar. Please try again later."
                 }
-            })
+            });
     }
 
     async function uploadBanner(file: File) {
@@ -252,8 +292,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         setMounted(true);
 
-        if (pb.authStore.model) {
-            pb.collection("users").subscribe(pb.authStore.model.id, () => {
+        if (pb.authStore.model && pb.authStore.isValid) {
+            pb.collection("users").subscribe(pb.authStore.model.id, (res) => {
+                // If email has changed, the cookie is invalidated and the user is logged out.
+                if (res.record.email !== user?.email) {
+                    setUser(null);
+                    pb.authStore.clear();
+                    toast.success("Success", {
+                        description: "Your email has been changed. Please log in again.",
+                        duration: 10000,
+                    });
+                }
                 update();
             });
         }
@@ -263,14 +312,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setAvatar(pb.authStore.model?.avatar ?
             `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.avatar}` :
-            `https://api.dicebear.com/6.x/identicon/svg?seed=${pb.authStore.model?.email}&scale=60&radius=50&backgroundColor=ffffff`);
+            `${process.env.NEXT_PUBLIC_URL}/assets/auth/avatar.jpg`);
 
         setBanner(pb.authStore.model?.banner ?
             `${process.env.NEXT_PUBLIC_AUTH_URL}/api/files/_pb_users_auth_/${pb.authStore.model.id}/${pb.authStore.model.banner}` :
             `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
 
         return () => {
-            pb.collection("users").unsubscribe("*");
+            pb.collection("users").unsubscribe();
             setMounted(false)
         }
 
@@ -289,8 +338,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         logIn,
         logOut,
         register,
-        resetPassword,
         update,
+
+        resetPassword,
+        changePassword,
+        requestEmailChange,
 
         uploadAvatar,
         removeAvatar,
