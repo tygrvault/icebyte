@@ -1,4 +1,4 @@
-import ProtectedPage from "@/components/auth/ProtectedPage";
+import ProtectedPage from "@/components/auth/protected-page";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/components/auth/context";
@@ -54,7 +54,7 @@ export default function AccountPage() {
         <>
             <ProtectedPage>
                 <div className="flex flex-col items-center justify-center w-full">
-                    <div className="flex flex-col max-w-[1400px] items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16 gap-4">
+                    <div className="flex flex-col max-w-[1400px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16 gap-4">
                         <div className="flex-col items-center gap-0 pb-4">
                             <h1 className="text-4xl font-extrabold">
                                 Account
@@ -64,7 +64,7 @@ export default function AccountPage() {
                             </p>
                         </div>
 
-                        <div className="flex flex-col justify-center gap-8">
+                        <div className="flex flex-col justify-center w-full gap-8">
                             <div className="flex flex-col gap-4 p-4 rounded-md bg-primary-200 dark:bg-primary-700/50">
                                 <div className="flex flex-col gap-0">
                                     <h2 className="text-xl font-semibold">
