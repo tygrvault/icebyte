@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     ) => {
         async function createUser() {
             if (!name || name.length < 2) return toast.error("Missing required field!", { description: "Please enter a valid name with at least 2 characters." });
-            if (!username || username.length < 3) return toast.error("Missing required field!", { description: "Please enter a valid username with at least 3 characters." });
+            if (!username || username.length < 2) return toast.error("Missing required field!", { description: "Please enter a valid username with at least 2 characters." });
             if (!email || !email.includes("@")) return toast.error("Missing required field!", { description: "Please enter a valid email." });
             if (!password || password.length < 8 || password.length > 72) return toast.error("Missing required field!", { description: "Please enter a valid password between 3 and 72 characters long." });
             if (password !== passwordConfirm) return toast.error("Passwords mismatch!", { description: "The passwords do not match. Please try again." });

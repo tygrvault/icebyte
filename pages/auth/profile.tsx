@@ -60,15 +60,15 @@ export default function ProfilePage() {
                                 <Input placeholder={user?.username} value={username} onChange={(e) => setUsername(e.target.value)} />
                                 <div className="flex flex-row items-center justify-between gap-8">
                                     <p className="text-primary-500">
-                                        Your username <b>must</b> be between 2 and 12 characters long.
+                                        Your username <b>must</b> be between 2 and 15 characters long.
                                     </p>
                                     <Button size="sm" onClick={async () => {
                                         if (username === user?.username) return toast.error("No changes were made.", {
                                             description: "Please make some changes before saving."
                                         });
 
-                                        if (username.length < 2 || username.length > 12) return toast.error("Invalid username.", {
-                                            description: "Your username must be between 2 and 12 characters long."
+                                        if (username.length < 2 || username.length > 15) return toast.error("Invalid username.", {
+                                            description: "Your username must be between 2 and 15 characters long."
                                         });
 
                                         const formData = new FormData();
