@@ -7,7 +7,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="flex flex-col max-w-[1400px] items-start justify-start w-full gap-4 p-4 sm:px-8 sm:pt-4">
                         <div className="flex-col items-center gap-0">
-                            <h1 className="text-4xl font-bold">
+                            <h1 className="text-4xl font-extrabold">
                                 Profile
                             </h1>
                             <p className="text-primary-500">
