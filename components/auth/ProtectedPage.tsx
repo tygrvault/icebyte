@@ -20,7 +20,7 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
-            if (e.key === "Enter") {
+            if (e.key === "Enter" && !user) {
                 e.preventDefault()
                 switch (mode) {
                     case "login": {
@@ -171,9 +171,10 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
                                         />
                                         <Button
                                             className="w-full text-md"
-                                            onClick={() =>
+                                            onClick={() => {
                                                 register(name, username, email, password, confirmPassword)
-                                            }
+                                                setMode("login")
+                                            }}
                                         >
                                             Create Account
                                         </Button>
