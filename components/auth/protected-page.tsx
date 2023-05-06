@@ -44,7 +44,7 @@ export default function ProtectedPage({ children }: { children: React.ReactNode 
 
         document.addEventListener("keydown", down)
         return () => document.removeEventListener("keydown", down)
-    }, [confirmPassword, email, logIn, mode, name, password, register, resetPassword, username])
+    }, [confirmPassword, email, logIn, mode, name, password, register, resetPassword, username, user])
 
     return (
         <>
