@@ -12,8 +12,8 @@
         "system": false,
         "required": true,
         "options": {
-          "min": 1,
-          "max": 16,
+          "min": 2,
+          "max": 24,
           "pattern": ""
         }
       },
@@ -36,6 +36,22 @@
           "thumbs": null,
           "protected": false
         }
+      },
+      {
+        "id": "a6n32jgd",
+        "name": "public",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "0x87jqvt",
+        "name": "notifications",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
       }
     ],
     "indexes": [],
@@ -52,7 +68,7 @@
       "manageRule": null,
       "minPasswordLength": 8,
       "onlyEmailDomains": null,
-      "requireEmail": false
+      "requireEmail": true
     }
   }
 ]
