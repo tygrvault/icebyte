@@ -2,14 +2,12 @@
 
 import {
   Dialog,
+  DialogHeader,
+  DialogFooter,
   DialogContent,
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  DialogHeader,
-  DialogFooter
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useAuth } from "@/components/auth/context";
