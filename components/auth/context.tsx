@@ -319,8 +319,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             `${process.env.NEXT_PUBLIC_URL}/assets/auth/banner.jpg`);
 
         return () => {
-            pb.collection("users").unsubscribe();
-            setMounted(false)
+            pb.collection("users").unsubscribe("*");
+            setMounted(false);
         }
 
         // Ignoring the line with reason: isValid is used to re-run the effect after every re-render of the component.
