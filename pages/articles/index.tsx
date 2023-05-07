@@ -1,17 +1,12 @@
 import { allArticles } from "@/.contentlayer/generated";
-import ArticleCard from "@/components/articles/ArticleCard";
+import ArticleCard from "@/components/articles/article-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function ArticlesPage() {
     const [query, setQuery] = useState("");
-    const [queryAmount, setQueryAmount] = useState(0);
-
-    useEffect(() => {
-        setQueryAmount(allArticles.filter((article) => article.title.toLowerCase().includes(query.toLowerCase()) || article.summary.toLowerCase().includes(query.toLowerCase())).length);
-    }, [query])
 
     return (
         <>
@@ -26,14 +21,6 @@ export default function ArticlesPage() {
                         <Button size="icon" className="h-9 w-9">
                             <Filter className="w-4 h-4" />
                         </Button>
-                    </div>
-                    <div className="flex flex-col w-full px-8 pt-8 lg:px-16 ">
-                        {queryAmount < 1 && (
-                            <div className="flex flex-col items-center justify-center w-full">
-                                <h1 className="text-2xl font-bold">No results found.</h1>
-                                <p className="text-primary-500">Try searching for something else.</p>
-                            </div>
-                        )}
                     </div>
                     <div className="grid grid-cols-1 gap-6 px-8 pt-8 lg:px-16 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3">
                         {allArticles
