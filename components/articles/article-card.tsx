@@ -1,13 +1,15 @@
+import { toBase64 } from "@/lib/utils"
 import { Article } from "contentlayer/generated"
+import Image from "next/image"
+import { shimmer } from "@/components/shimmer"
 
 export default function ArticleCard({ article }: { article: Article }) {
     return (
         <>
-
             <a tabIndex={0} className="rounded-md relative flex w-full min-h-[550px] border border-black/10 dark:border-white/10 md:hover:-translate-y-1 md:hover:active:translate-y-0 transition-all duration-300" href={article.slug}>
-                <div className="flex flex-col flex-auto w-full h-auto p-0 text-left ">
+                <div className="flex flex-col flex-auto w-screen h-auto p-0 text-left ">
                     <div className="w-full h-full min-w-full overflow-hidden rounded-md ">
-                        <img src={article.image} alt="Article Image" className="object-cover w-full h-full" />
+                        <Image src={article.image} fill placeholder="blur" blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(700, 475))}`} alt="Article Image" style={{ objectFit: "cover" }} className="object-cover w-full h-full rounded-md" />
                     </div>
                 </div>
                 <div className="absolute bottom-0 w-full border-t border-black/10 dark:border-white/10 rounded-b-md backdrop-blur-md bg-black/40">
@@ -17,11 +19,11 @@ export default function ArticleCard({ article }: { article: Article }) {
                                 {article.title}
                             </h1>
                             <p className="text-primary-100">
-                                { } min read
+                                min read
                             </p>
                         </div>
-                        <p className="text-primary-200 ">
-                            {article.summary.split(" ").slice(0, 20).join(" ") + "..."}
+                        <p className="overflow-hidden text-primary-200 text-ellipsis">
+                            {article.summary}
                         </p>
                     </div>
                 </div>
