@@ -1,11 +1,19 @@
-import { allArticles } from "@/.contentlayer/generated";
+import { Article, allArticles } from "@/.contentlayer/generated";
 import ArticleCard from "@/components/articles/article-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { compareDesc } from "date-fns";
 import { Filter } from "lucide-react";
 import { useState } from "react";
 
-export default function ArticlesPage() {
+export async function getStaticProps() {
+    const articles = allArticles.sort((a, b) => {
+        return compareDesc(new Date(a.date), new Date(b.date))
+    })
+    return { props: { articles } }
+}
+
+export default function ArticlesPage({ articles }: { articles: Article[] }) {
     const [query, setQuery] = useState("");
 
     return (
@@ -23,7 +31,7 @@ export default function ArticlesPage() {
                         </Button>
                     </div>
                     <div className="grid grid-cols-1 gap-6 px-8 pt-8 lg:px-16 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3">
-                        {allArticles
+                        {articles
                             .filter((article) => article.title.toLowerCase().includes(query.toLowerCase()) || article.summary.toLowerCase().includes(query.toLowerCase()))
                             .map((article) => {
                                 return (
