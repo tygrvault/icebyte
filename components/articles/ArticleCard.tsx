@@ -1,4 +1,4 @@
-import { Article } from "@/.contentlayer/generated"
+import { Article } from "contentlayer/generated"
 
 export default function ArticleCard({ article }: { article: Article }) {
     return (
