@@ -29,7 +29,7 @@ export const Article = defineDocumentType(() => ({
     computedFields: {
         slug: {
             type: 'string',
-            resolve: (post) => `${post._raw.flattenedPath}`,
+            resolve: (post) => `/articles/${post._raw.flattenedPath}`,
         },
     },
 }));
