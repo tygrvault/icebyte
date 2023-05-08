@@ -2,6 +2,7 @@ import { toBase64 } from "@/lib/utils"
 import { Article } from "contentlayer/generated"
 import Image from "next/image"
 import { shimmer } from "@/components/shimmer"
+import readingTime from "reading-time"
 
 export default function ArticleCard({ article }: { article: Article }) {
     return (
@@ -19,7 +20,7 @@ export default function ArticleCard({ article }: { article: Article }) {
                                 {article.title}
                             </h1>
                             <p className="text-primary-100">
-                                min read
+                                {readingTime(article.body.raw).minutes.toPrecision(1)} min read
                             </p>
                         </div>
                         <p className="overflow-hidden text-primary-200 text-ellipsis">
