@@ -54,7 +54,7 @@ export default function UserDrawer() {
                                         </div>
                                     </div>
                                 )}
-                                <Image src={banner} alt="banner" fill className="object-cover w-full h-full" />
+                                <img src={banner} alt="banner" className="object-cover w-full h-full" />
                             </AspectRatio>
                         </DrawerHeader>
                         <div className="flex flex-col h-[4.4rem] px-3 text-xl font-semibold -translate-y-14 min-h-20">

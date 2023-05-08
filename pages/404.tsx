@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,6 +20,20 @@ export default function NotFound() {
 
     return (
         <>
+            <Head>
+                <title>Not Found | Icebyte</title>
+                <meta name="title" content="Not Found | Icebyte" />
+                <meta name="description" content="This page doesn't exist or you don't have access to it." />
+
+                <meta property="twitter:title" content="Not Found | Icebyte" />
+                <meta property="twitter:description" content="This page doesn't exist or you don't have access to it." />
+                <meta property="twitter:image" content="/og.png" />
+
+                <meta property="og:title" content="Not Found | Icebyte" />
+                <meta property="og:description" content="This page doesn't exist or you don't have access to it." />
+                <meta property="og:image" content="/og.png" />
+                <meta property="og:url" content="https://icebyte.tygr.dev/404" />
+            </Head>
             <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <div className="flex flex-col items-center justify-center gap-6">
                     <div className="flex flex-col items-center justify-center">

@@ -12,8 +12,8 @@
         "system": false,
         "required": true,
         "options": {
-          "min": 1,
-          "max": 16,
+          "min": 2,
+          "max": 24,
           "pattern": ""
         }
       },
@@ -25,17 +25,43 @@
         "required": false,
         "options": {
           "maxSelect": 1,
-          "maxSize": 5242880,
+          "maxSize": 12582912,
           "mimeTypes": [
             "image/jpeg",
             "image/png",
-            "image/svg+xml",
             "image/gif",
             "image/webp"
           ],
           "thumbs": null,
           "protected": false
         }
+      },
+      {
+        "id": "iko3vue1",
+        "name": "banner",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 12582912,
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/gif"
+          ],
+          "thumbs": [],
+          "protected": false
+        }
+      },
+      {
+        "id": "a6n32jgd",
+        "name": "public",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
       }
     ],
     "indexes": [],
@@ -52,7 +78,60 @@
       "manageRule": null,
       "minPasswordLength": 8,
       "onlyEmailDomains": null,
-      "requireEmail": false
+      "requireEmail": true
     }
+  },
+  {
+    "id": "0s9mnruc33ud7a3",
+    "name": "comments",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "c6nyukuv",
+        "name": "article_id",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "eimogjcz",
+        "name": "author",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "id": "gnu2e7u2",
+        "name": "body",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "author.public:each = true",
+    "viewRule": "author.public:each = true",
+    "createRule": "@request.auth.id != \"\" && @request.auth.verified = true",
+    "updateRule": null,
+    "deleteRule": "@request.auth.id = author.id && @request.auth.verified = true",
+    "options": {}
   }
 ]

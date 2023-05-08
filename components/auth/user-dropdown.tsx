@@ -40,7 +40,7 @@ export default function UserDropdown() {
                                     </div>
                                 </div>
                             )}
-                            <Image src={banner} alt="banner" fill className="object-cover w-full h-full" />
+                            <img src={banner} alt="banner" className="object-cover w-full h-full" />
                         </AspectRatio>
                         <DropdownMenuLabel className="flex flex-col h-16 px-3 text-xl font-semibold -translate-y-16 min-h-20">
                             <Avatar className="w-20 h-20 mb-2 border border-black/10 dark:border-white/10">
