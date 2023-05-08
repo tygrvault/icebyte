@@ -12,6 +12,15 @@ export default function Home() {
       <Head>
         <title>Icebyte</title>
         <meta name="description" content="Icebyte is a brand-spanking new review platform for indie games of all sizes." />
+
+        <meta property="twitter:title" content="Icebyte" />
+        <meta property="twitter:description" content="Icebyte is a brand-spanking new review platform for indie games of all sizes." />
+        <meta property="twitter:image" content="/og.png" />
+
+        <meta property="og:title" content="Icebyte" />
+        <meta property="og:description" content="Icebyte is a brand-spanking new review platform for indie games of all sizes." />
+        <meta property="og:image" content="/og.png" />
+        <meta property="og:url" content="https://icebyte.tygr.dev" />
       </Head>
       <div className="flex flex-col items-center justify-center gap-4 mt-12 text-center md:flex-row md:mt-24 lg:mt-32 xl:mt-44 2xl:mt-54 xs:gap-2">
         <Image alt="Logo" src={DarkLogo} className="hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 dark:block" />

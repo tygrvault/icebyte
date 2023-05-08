@@ -22,6 +22,15 @@ export default function ArticlesPage({ articles }: { articles: Article[] }) {
             <Head>
                 <title>Articles | Icebyte</title>
                 <meta name="description" content="An entire list of Icebyte's articles." />
+
+                <meta property="twitter:title" content="Articles | Icebyte" />
+                <meta property="twitter:description" content="An entire list of Icebyte's articles." />
+                <meta property="twitter:image" content="/og.png" />
+
+                <meta property="og:title" content="Articles | Icebyte" />
+                <meta property="og:description" content="An entire list of Icebyte's articles." />
+                <meta property="og:image" content="/og.png" />
+                <meta property="og:url" content="https://icebyte.tygr.dev/articles" />
             </Head>
             <div className="flex items-center justify-center w-full py-4">
                 <div className="flex flex-col items-center gap-4 w-full max-w-[1400px]">

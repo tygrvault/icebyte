@@ -13,6 +13,15 @@ export default function Article({ article }: { article: Article }) {
             <Head>
                 <title>{article.title}</title>
                 <meta name="description" content={article.summary} />
+
+                <meta property="twitter:title" content={article.title} />
+                <meta property="twitter:description" content={article.summary} />
+                <meta property="twitter:image" content={article.image} />
+
+                <meta property="og:title" content={article.title} />
+                <meta property="og:description" content={article.summary} />
+                <meta property="og:image" content={article.image} />
+                <meta property="og:url" content={"https://icebyte.tygr.dev/articles/" + article.slug} />
             </Head>
             <div className="flex flex-col items-center justify-center w-full">
                 <div className="flex flex-col max-w-[850px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16">

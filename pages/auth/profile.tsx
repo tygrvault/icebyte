@@ -39,6 +39,15 @@ export default function ProfilePage() {
             <Head>
                 <title>Profile | Icebyte</title>
                 <meta name="description" content="Please login to edit your Icebyte profile." />
+
+                <meta property="twitter:title" content="Profile | Icebyte" />
+                <meta property="twitter:description" content="Please login to edit your Icebyte profile." />
+                <meta property="twitter:image" content="/og.png" />
+
+                <meta property="og:title" content="Profile | Icebyte" />
+                <meta property="og:description" content="Please login to edit your Icebyte profile." />
+                <meta property="og:image" content="/og.png" />
+                <meta property="og:url" content="https://icebyte.tygr.dev/profile" />
             </Head>
             <ProtectedPage>
                 <div className="flex flex-col items-center justify-center w-full">
