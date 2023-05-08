@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compareDesc } from "date-fns";
 import { Filter } from "lucide-react";
+import Head from "next/head";
 import { useState } from "react";
 
 export async function getStaticProps() {
@@ -18,6 +19,10 @@ export default function ArticlesPage({ articles }: { articles: Article[] }) {
 
     return (
         <>
+            <Head>
+                <title>Articles | Icebyte</title>
+                <meta name="description" content="An entire list of Icebyte's articles." />
+            </Head>
             <div className="flex items-center justify-center w-full py-4">
                 <div className="flex flex-col items-center gap-4 w-full max-w-[1400px]">
                     <div className="flex flex-col items-center w-full">

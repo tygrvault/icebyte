@@ -2,12 +2,17 @@ import { Search } from "@/components/search";
 import { Button } from "@/components/ui/button";
 import DarkLogo from "@/public/assets/logos/dark.svg";
 import LightLogo from "@/public/assets/logos/light.svg";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>Icebyte</title>
+        <meta name="description" content="Icebyte is a brand-spanking new review platform for indie games of all sizes." />
+      </Head>
       <div className="flex flex-col items-center justify-center gap-4 mt-12 text-center md:flex-row md:mt-24 lg:mt-32 xl:mt-44 2xl:mt-54 xs:gap-2">
         <Image alt="Logo" src={DarkLogo} className="hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 dark:block" />
         <Image alt="Logo" src={LightLogo} className="block w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 dark:hidden" />

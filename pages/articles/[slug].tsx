@@ -1,17 +1,19 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Article, allArticles } from "contentlayer/generated";
-import { useMDXComponent } from "next-contentlayer/hooks";
 import { format, parseISO } from "date-fns";
 import { GetStaticPaths } from "next";
 import readingTime from "reading-time";
 import { Mdx } from "@/components/mdx";
 import Balancer from "react-wrap-balancer";
+import Head from "next/head";
 
 export default function Article({ article }: { article: Article }) {
-    const MDXContent = useMDXComponent(article.body.code ?? "");
-
     return (
         <>
+            <Head>
+                <title>{article.title}</title>
+                <meta name="description" content={article.summary} />
+            </Head>
             <div className="flex flex-col items-center justify-center w-full">
                 <div className="flex flex-col max-w-[850px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16">
                     <div className="flex-col items-center gap-0 pb-4">

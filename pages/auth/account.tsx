@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { AlertTriangle, Lock, X } from "lucide-react";
+import Head from "next/head";
 
 export default function AccountPage() {
     const { user, resetPassword, changePassword, requestEmailChange, deleteAccount } = useAuth();
@@ -52,6 +53,10 @@ export default function AccountPage() {
 
     return (
         <>
+            <Head>
+                <title>Account | Icebyte</title>
+                <meta name="description" content="Please login to edit your Icebyte profile." />
+            </Head>
             <ProtectedPage>
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="flex flex-col max-w-[1400px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16 gap-4">

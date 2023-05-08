@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 import { AlertDialogHeader, AlertDialogFooter } from "@/components/ui/alert-dialog";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import Head from "next/head";
 
 export default function ProfilePage() {
     const { user, avatar, banner, uploadAvatar, uploadBanner, removeAvatar, removeBanner } = useAuth();
@@ -35,6 +36,10 @@ export default function ProfilePage() {
 
     return (
         <>
+            <Head>
+                <title>Profile | Icebyte</title>
+                <meta name="description" content="Please login to edit your Icebyte profile." />
+            </Head>
             <ProtectedPage>
                 <div className="flex flex-col items-center justify-center w-full">
                     <div className="flex flex-col max-w-[1400px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16 gap-4">

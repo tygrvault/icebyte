@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,6 +20,10 @@ export default function NotFound() {
 
     return (
         <>
+            <Head>
+                <title>Not Found | Icebyte</title>
+                <meta name="description" content="This page doesn't exist or you don't have access to it." />
+            </Head>
             <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                 <div className="flex flex-col items-center justify-center gap-6">
                     <div className="flex flex-col items-center justify-center">
