@@ -12,6 +12,7 @@ export default function Article({ article }: { article: Article }) {
         <>
             <Head>
                 <title>{article.title}</title>
+                <meta name="title" content={article.title} />
                 <meta name="description" content={article.summary} />
 
                 <meta property="twitter:title" content={article.title} />

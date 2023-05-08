@@ -22,6 +22,7 @@ export default function NotFound() {
         <>
             <Head>
                 <title>Not Found | Icebyte</title>
+                <meta name="title" content="Not Found | Icebyte" />
                 <meta name="description" content="This page doesn't exist or you don't have access to it." />
 
                 <meta property="twitter:title" content="Not Found | Icebyte" />

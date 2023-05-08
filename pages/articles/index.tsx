@@ -21,6 +21,7 @@ export default function ArticlesPage({ articles }: { articles: Article[] }) {
         <>
             <Head>
                 <title>Articles | Icebyte</title>
+                <meta name="title" content="Articles | Icebyte" />
                 <meta name="description" content="An entire list of Icebyte's articles." />
 
                 <meta property="twitter:title" content="Articles | Icebyte" />

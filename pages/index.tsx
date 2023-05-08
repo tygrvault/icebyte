@@ -11,6 +11,7 @@ export default function Home() {
     <>
       <Head>
         <title>Icebyte</title>
+        <meta name="title" content="Icebyte" />
         <meta name="description" content="Icebyte is a brand-spanking new review platform for indie games of all sizes." />
 
         <meta property="twitter:title" content="Icebyte" />

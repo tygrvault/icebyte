@@ -5,6 +5,7 @@ export default function TeamPage() {
         <>
             <Head>
                 <title>Team | Icebyte</title>
+                <meta name="title" content="Team | Icebyte" />
                 <meta name="description" content="The infoboard of the team here at Icebyte." />
 
                 <meta property="twitter:title" content="Team | Icebyte" />
