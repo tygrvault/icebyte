@@ -3,6 +3,7 @@ import ArticleCard from "@/components/articles/article-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compareDesc } from "date-fns";
+import { X } from "lucide-react";
 import { Filter } from "lucide-react";
 import Head from "next/head";
 import { useState } from "react";
@@ -41,11 +42,11 @@ export default function ArticlesPage({ articles }: { articles: Article[] }) {
                     </div>
                     <div className="flex flex-row items-center justify-center w-full gap-2 px-16 md:px-0 md:w-1/2 lg:w-1/3">
                         <Input placeholder="Search..." className="w-full h-9 min-w-1/3" value={query} onChange={(e) => setQuery(e.target.value)} />
-                        <Button size="icon" className="h-9 w-9">
-                            <Filter className="w-4 h-4" />
+                        <Button size="icon" className="h-9 w-9" disabled={query.length < 1} onClick={() => setQuery("")}>
+                            <X className="w-4 h-4" />
                         </Button>
                     </div>
-                    <div className="grid grid-cols-1 gap-6 px-8 pt-8 lg:px-16 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 px-4 pt-6 sm:px-6 md:px-8 lg:px-12 xl:px-16 md:grid md:grid-cols-2 lg:grid lg:grid-cols-3">
                         {articles
                             .filter((article) => article.title.toLowerCase().includes(query.toLowerCase()) || article.summary.toLowerCase().includes(query.toLowerCase()))
                             .map((article) => {
