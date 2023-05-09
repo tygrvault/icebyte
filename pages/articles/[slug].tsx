@@ -14,6 +14,8 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import Comment from "@/types/Comment";
 import Link from "next/link";
+import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export default function Article({ article }: { article: Article }) {
     const { loggedIn, user } = useAuth();
@@ -29,8 +31,9 @@ export default function Article({ article }: { article: Article }) {
             setLoading(false);
         }).catch((err) => {
             console.log(JSON.stringify(err));
+            setLoading(false);
         });
-    }, [loading]);
+    }, [article._id, loading]);
 
     return (
         <>
@@ -45,13 +48,11 @@ export default function Article({ article }: { article: Article }) {
                     </div>
                     <div className="flex flex-row items-center justify-between w-full">
                         <div className="flex flex-row items-center justify-center gap-2">
-                            <Avatar className="items-center w-6 h-6">
+                            <Avatar className="items-center w-8 h-8">
                                 <AvatarFallback>
-                                    {/* {Insert user logic here} */}
+                                    T
                                 </AvatarFallback>
-                                <AvatarImage>
-                                    {/* {Insert user logic here} */}
-                                </AvatarImage>
+                                <AvatarImage src={"https://auth.icebyte.tygr.dev/api/files/_pb_users_auth_/ckw9io313y2iv5e/img_1272_XRNXpg4qgI.jpeg?token="} />
                             </Avatar>
                             <p className="font-semibold text-primary-500">
                                 tygerxqt - {format(parseISO(article.date), 'LLLL d, yyyy')}
@@ -62,8 +63,8 @@ export default function Article({ article }: { article: Article }) {
                         </p>
                     </div>
 
-                    <div className="max-w-[850px] h-auto pt-8">
-                        <img src={article.image} alt="Article Image" style={{ objectFit: "cover" }} className="w-full h-full rounded-md max-w-none" />
+                    <div className="max-w-[850px] w-full h-auto pt-8">
+                        <Image src={article.image} alt="Article Image" style={{ objectFit: "cover" }} width={850} height={0} className="w-full h-full rounded-md max-w-none" />
                     </div>
 
                     <article className="max-w-none">
@@ -186,13 +187,7 @@ export default function Article({ article }: { article: Article }) {
                             ) : (
                                 <>
                                     <div className="flex flex-col items-center justify-center w-full gap-8 text-center">
-                                        <div className="flex flex-col gap-2">
-                                            <h1 className="text-lg font-bold">Something went wrong...</h1>
-                                            <p>Failed to fetch comments, check the console for more info.</p>
-                                        </div>
-                                        <Button size="sm" onClick={() => setLoading(true)}>
-                                            Retry?
-                                        </Button>
+                                        <p>{loading ? "Loading..." : "Failed to fetch comments."}</p>
                                     </div>
                                 </>
                             )}

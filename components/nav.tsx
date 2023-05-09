@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import MobileNav from "@/components/mobile-nav";
 import Image from "next/image";
 import Link from "next/link";
+import { Search } from "./search";
 
 export default function Nav() {
   return (
@@ -45,6 +46,7 @@ export default function Nav() {
             </div>
           </div>
         </div>
+        <Search hideButton={true} />
       </nav>
     </>
   );
