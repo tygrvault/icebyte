@@ -80,7 +80,7 @@ export default function Home() {
           </Balancer>
           <Balancer>
           <p className="text-center basis-2/3 md:text-start text-primary-600 dark:text-primary-300 sm:text-start">
-            A review is broken down into 4 seperate sections / points: World, Gameplay, Music, Story. <br /> <br />
+            A review is broken down into 4 seperate topics: World, Gameplay, Music, Story. <br /> <br />
             Each one of these topics are scored out of 25, which leads the maxoumum top score to be 100. These numbered scores can alsobe displayed from grade A being the highest and F being the lowest.
           </p>
           </Balancer>
