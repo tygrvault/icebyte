@@ -34,15 +34,15 @@ export default function ArticlesPage({ articles }: { articles: Article[] }) {
                 <meta property="og:image" content="/og.png" />
                 <meta property="og:url" content="https://icebyte.tygr.dev/articles" />
             </Head>
-            <div className="flex items-center justify-center w-full py-4">
+            <div className="flex justify-center items-center py-4 w-full">
                 <div className="flex flex-col items-center gap-4 w-full max-w-[1400px]">
                     <div className="flex flex-col items-center w-full">
                         <h1 className="text-4xl font-extrabold">Articles</h1>
                         <p className="text-primary-500">The entire list of all articles on IceByte.</p>
                     </div>
-                    <div className="flex flex-row items-center justify-center w-full gap-2 px-16 md:px-0 md:w-1/2 lg:w-1/3">
+                    <div className="flex flex-row gap-2 justify-center items-center px-16 w-full md:px-0 md:w-1/2 lg:w-1/3">
                         <Input placeholder="Search..." className="w-full h-9 min-w-1/3" value={query} onChange={(e) => setQuery(e.target.value)} />
-                        <Button size="icon" className="h-9 w-9" disabled={query.length < 1} onClick={() => setQuery("")}>
+                        <Button size="icon" className="w-9 h-9" disabled={query.length < 1} onClick={() => setQuery("")} aria-label="Clear Query">
                             <X className="w-4 h-4" />
                         </Button>
                     </div>
