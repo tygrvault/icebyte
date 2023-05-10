@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "INIT_CWD=$PWD next build",
+    "build": "contentlayer build && next build",
     "start": "next start",
     "lint": "next lint",
     "vercel": "vercel",
@@ -38,7 +38,6 @@
     "react-dom": "18.2.0",
     "react-wrap-balancer": "^0.4.1",
     "reading-time": "^1.5.0",
-    "rehype-autolink-headings": "^6.1.1",
     "rehype-pretty-code": "^0.9.5",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
