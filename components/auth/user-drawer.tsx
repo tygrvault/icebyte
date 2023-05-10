@@ -14,9 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 import AuthDrawer from "./auth-drawer";
 import { useAuth } from "./context";
-import pb from "@/lib/pocketbase";
 import { useState } from "react";
-import { toast } from "sonner";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -39,11 +37,11 @@ export default function UserDrawer() {
                 <Drawer open={open} onOpenChange={setOpen}>
                     <DrawerTrigger asChild className="cursor-pointer">
                         <Avatar className="border border-black/10 dark:border dark:border-white/10">
-                            <AvatarImage src={avatar} />
+                            <AvatarImage src={avatar} alt="Avatar" aria-label="User Avatar" />
                             <AvatarFallback>{user?.name.slice(0, 1)}</AvatarFallback>
                         </Avatar>
                     </DrawerTrigger>
-                    <DrawerContent position="bottom" size="content" className="p-0 border-t rounded-t-lg border-black/10 dark:border-white/10" closeButton={true}>
+                    <DrawerContent position="bottom" size="content" className="p-0 rounded-t-lg border-t border-black/10 dark:border-white/10" closeButton={true}>
                         <DrawerHeader className="p-0">
                             <AspectRatio ratio={2 / 1}>
                                 {!user.verified && (
@@ -54,15 +52,15 @@ export default function UserDrawer() {
                                         </div>
                                     </div>
                                 )}
-                                <img src={banner} alt="banner" className="object-cover w-full h-full" />
+                                <Image src={banner} width={640} height={0} alt="banner" className="object-cover w-full h-full" />
                             </AspectRatio>
                         </DrawerHeader>
                         <div className="flex flex-col h-[4.4rem] px-3 text-xl font-semibold -translate-y-14 min-h-20">
-                            <Avatar className="w-20 h-20 mb-2 border border-black/10 dark:border-white/10">
-                                <AvatarImage src={avatar} />
+                            <Avatar className="mb-2 w-20 h-20 border border-black/10 dark:border-white/10">
+                                <AvatarImage src={avatar} alt="Avatar" aria-label="User Avatar" />
                                 <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
                             </Avatar>
-                            <div className="flex flex-row items-center justify-between rounded-none">
+                            <div className="flex flex-row justify-between items-center rounded-none">
                                 <div>
                                     <span className="text-black dark:text-white">
                                         {user.name}
@@ -76,7 +74,7 @@ export default function UserDrawer() {
                         <DrawerFooter className="flex flex-col text-center border-t sm:flex-col sm:justify-center border-black/20 dark:border-white/20">
                             <Link href="/profile">
                                 <Button className="flex flex-row items-center w-full rounded-none" variant="ghost">
-                                    <User className="w-4 h-4 mr-2" />
+                                    <User className="mr-2 w-4 h-4" />
                                     <span>
                                         Profile
                                     </span>
@@ -84,7 +82,7 @@ export default function UserDrawer() {
                             </Link>
                             <Link href="/account">
                                 <Button className="flex flex-row items-center w-full rounded-none" variant="ghost">
-                                    <FileText className="w-4 h-4 mr-2" />
+                                    <FileText className="mr-2 w-4 h-4" />
                                     <span>
                                         Account
                                     </span>
@@ -92,7 +90,7 @@ export default function UserDrawer() {
                             </Link>
                             <hr className="w-full border-black/10 dark:border-white/10" />
                             <Button className="flex flex-row items-center rounded-none" variant="ghost" onClick={() => logOut()}>
-                                <LogOut className="w-4 h-4 mr-2" />
+                                <LogOut className="mr-2 w-4 h-4" />
                                 <span>
                                     Log out
                                 </span>

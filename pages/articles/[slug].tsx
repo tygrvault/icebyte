@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import Comment from "@/types/Comment";
 import Link from "next/link";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Head from "next/head";
 
 export default function Article({ article }: { article: Article }) {
     const { loggedIn, user } = useAuth();
@@ -37,22 +37,36 @@ export default function Article({ article }: { article: Article }) {
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center w-full">
+        <Head>
+                <title>{article.title}</title>
+                <meta name="title" content={article.title} />
+                <meta name="description" content={article.summary} />
+
+                <meta property="twitter:title" content={article.title} />
+                <meta property="twitter:description" content={article.summary} />
+                <meta property="twitter:image" content={process.env.NEXT_PUBLIC_URL + article.image} />
+
+                <meta property="og:title" content={article.title} />
+                <meta property="og:description" content={article.summary} />
+                <meta property="og:image" content={process.env.NEXT_PUBLIC_URL + article.image} />
+                <meta property="og:url" content={process.env.NEXT_PUBLIC_URL + article.slug} />
+            </Head>
+            <div className="flex flex-col justify-center items-center w-full">
                 <div className="flex flex-col max-w-[850px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16">
-                    <div className="flex-col items-center gap-0 pb-4">
+                    <div className="flex-col gap-0 items-center pb-4">
                         <h1 className="text-3xl font-extrabold md:text-4xl lg:text-5xl">
                             <Balancer>
                                 {article.title}
                             </Balancer>
                         </h1>
                     </div>
-                    <div className="flex flex-row items-center justify-between w-full">
-                        <div className="flex flex-row items-center justify-center gap-2">
+                    <div className="flex flex-row justify-between items-center w-full">
+                        <div className="flex flex-row gap-2 justify-center items-center">
                             <Avatar className="items-center w-8 h-8">
                                 <AvatarFallback>
                                     T
                                 </AvatarFallback>
-                                <AvatarImage src={"https://auth.icebyte.tygr.dev/api/files/_pb_users_auth_/ckw9io313y2iv5e/img_1272_XRNXpg4qgI.jpeg?token="} />
+                                <AvatarImage alt="Author Avatar" src={"https://auth.icebyte.tygr.dev/api/files/_pb_users_auth_/ckw9io313y2iv5e/img_1272_XRNXpg4qgI.jpeg?token="} />
                             </Avatar>
                             <p className="font-semibold text-primary-500">
                                 tygerxqt - {format(parseISO(article.date), 'LLLL d, yyyy')}
@@ -64,39 +78,39 @@ export default function Article({ article }: { article: Article }) {
                     </div>
 
                     <div className="max-w-[850px] w-full h-auto pt-8">
-                        <Image src={article.image} alt="Article Image" style={{ objectFit: "cover" }} width={850} height={0} className="w-full h-full rounded-md max-w-none" />
+                        <Image src={article.image} alt="Article Image" priority={true} style={{ objectFit: "cover" }} width={850} height={0} className="w-full max-w-none h-full rounded-md" />
                     </div>
 
                     <article className="max-w-none">
                         <Mdx code={article.body.code} />
                     </article>
 
-                    <hr className="w-full my-6 border border-black/10 dark:border-white/10" />
+                    <hr className="my-6 w-full border border-black/10 dark:border-white/10" />
 
-                    <div className="flex flex-col w-full gap-8">
-                        <div className="flex flex-col items-center justify-between xs:flex-row">
-                            <div className="flex flex-row items-center justify-start gap-4 px-4 py-2 rounded-lg">
-                                <Avatar className="w-14 h-14 ">
+                    <div className="flex flex-col gap-8 w-full">
+                        <div className="flex flex-col justify-between items-center xs:flex-row">
+                            <div className="flex flex-row gap-4 justify-start items-center px-4 py-2 rounded-lg">
+                                <Avatar className="w-14 h-14">
                                     <AvatarFallback>T</AvatarFallback>
-                                    <AvatarImage src="https://avatars.githubusercontent.com/u/59417077?v=4" />
+                                    <AvatarImage alt="Author Avatar" src="https://avatars.githubusercontent.com/u/59417077?v=4" />
                                 </Avatar>
-                                <div className="flex flex-col ">
-                                    <h3 className="text-lg font-semibold">
+                                <div className="flex flex-col">
+                                    <h1 className="text-lg font-semibold">
                                         Written by Ty Mason
-                                    </h3>
-                                    <a href="https://twitter.com/tygerxqt" className="text-primary-400">
+                                    </h1>
+                                    <a href="https://twitter.com/tygerxqt" className="text-primary-500">
                                         Learn more →
                                     </a>
                                 </div>
                             </div>
 
-                            <div className="flex-row items-center justify-center hidden gap-2 p-2 rounded-lg xs:flex">
+                            <div className="hidden flex-row gap-2 justify-center items-center p-2 rounded-lg xs:flex">
                                 <Link href={`https://twitter.com/intent/tweet?text=Check out this awesome article I just read: ${process.env.NEXT_PUBLIC_URL + article.slug}`} target="_blank">
-                                    <Button size="icon" variant="ghost">
+                                    <Button size="icon" variant="ghost" aria-label="Share on Twitter">
                                         <Twitter />
                                     </Button>
                                 </Link>
-                                <Button size="icon" variant="ghost" onClick={() => {
+                                <Button size="icon" variant="ghost" aria-label="Copy link" onClick={() => {
                                     toast.success("Copied to clipboard!")
                                     navigator.clipboard.writeText("https://icebyte.tygr.dev" + article.slug)
                                 }}>
@@ -105,18 +119,18 @@ export default function Article({ article }: { article: Article }) {
                             </div>
                         </div>
 
-                        <div className="flex flex-col w-full gap-4">
+                        <div className="flex flex-col gap-4 w-full">
                             {user && !user.verified && (
                                 <div className="flex flex-row justify-center bg-[#EBCB8B] rounded-md text-black">
-                                    <div className="flex flex-row items-center justify-start gap-2 p-2">
+                                    <div className="flex flex-row gap-2 justify-start items-center p-2">
                                         <AlertTriangle className="w-4 h-4" />
                                         <p className="text-sm font-semibold">To post comments, you&apos;ll need verify your account.</p>
                                     </div>
                                 </div>
                             )}
-                            <div className="flex flex-row items-center justify-center gap-2">
-                                <Input className="h-9 max-w-none" placeholder={loggedIn ? "Leave a comment..." : "Please log in to comment on articles"} disabled={user ? user.verified ? false : true : true} value={comment} onChange={(e) => setComment(e.target.value)} />
-                                <Button size="icon" className="h-9 w-9" disabled={user ? user.verified ? false : true : true} onClick={() => {
+                            <div className="flex flex-row gap-2 justify-center items-center">
+                                <Input className="max-w-none h-9" placeholder={loggedIn ? "Leave a comment..." : "Please log in to comment on articles"} disabled={user ? user.verified ? false : true : true} value={comment} onChange={(e) => setComment(e.target.value)} />
+                                <Button size="icon" className="w-9 h-9" aria-label="Submit comment" disabled={user ? user.verified ? false : true : true} onClick={() => {
                                     if (comment.length < 1) {
                                         return toast.error("Something went wrong!", {
                                             description: "Please enter a comment before attempting to post.",
@@ -150,11 +164,11 @@ export default function Article({ article }: { article: Article }) {
                                 <>
                                     {comments.map((comment: Comment) => {
                                         return (
-                                            <div key={comment.id} className="flex flex-row justify-between w-full p-2 rounded-md bg-primary-700/50">
-                                                <div className="flex flex-row items-center gap-3">
+                                            <div key={comment.id} className="flex flex-row justify-between p-2 w-full rounded-md bg-primary-700/50">
+                                                <div className="flex flex-row gap-3 items-center">
                                                     <Avatar className="w-10 h-10">
                                                         <AvatarFallback>{comment.expand.author.name.slice(0, 1)}</AvatarFallback>
-                                                        <AvatarImage src={process.env.NEXT_PUBLIC_AUTH_URL + "/api/files/_pb_users_auth_/" + comment.expand.author.id + "/" + comment.expand.author.avatar} />
+                                                        <AvatarImage alt="Comment avatar" aria-label="Comment avatar" src={process.env.NEXT_PUBLIC_AUTH_URL + "/api/files/_pb_users_auth_/" + comment.expand.author.id + "/" + comment.expand.author.avatar} />
                                                     </Avatar>
                                                     <div className="flex flex-col">
                                                         <p className="font-semibold text-primary-300">
@@ -186,7 +200,7 @@ export default function Article({ article }: { article: Article }) {
                                 </>
                             ) : (
                                 <>
-                                    <div className="flex flex-col items-center justify-center w-full gap-8 text-center">
+                                    <div className="flex flex-col gap-8 justify-center items-center w-full text-center">
                                         <p>{loading ? "Loading..." : "Failed to fetch comments."}</p>
                                     </div>
                                 </>

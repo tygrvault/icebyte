@@ -26,7 +26,7 @@ export default function UserDropdown() {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild className="cursor-pointer">
                         <Avatar className="border border-black/10 dark:border dark:border-white/10">
-                            <AvatarImage src={avatar} />
+                            <AvatarImage src={avatar} alt="Avatar" aria-label="Avatar" />
                             <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>
@@ -40,14 +40,14 @@ export default function UserDropdown() {
                                     </div>
                                 </div>
                             )}
-                            <img src={banner} alt="banner" className="object-cover w-full h-full" />
+                            <Image src={banner} width={350} height={175} alt="banner" className="object-cover w-full h-full" />
                         </AspectRatio>
-                        <DropdownMenuLabel className="flex flex-col h-16 px-3 text-xl font-semibold -translate-y-16 min-h-20">
-                            <Avatar className="w-20 h-20 mb-2 border border-black/10 dark:border-white/10">
-                                <AvatarImage src={avatar} />
+                        <DropdownMenuLabel className="flex flex-col px-3 h-16 text-xl font-semibold -translate-y-16 min-h-20">
+                            <Avatar className="mb-2 w-20 h-20 border border-black/10 dark:border-white/10">
+                                <AvatarImage src={avatar} aria-label="User Avatar" alt="Avatar" />
                                 <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
                             </Avatar>
-                            <div className="flex flex-row items-center justify-between">
+                            <div className="flex flex-row justify-between items-center">
                                 <div>
                                     <span className="text-black dark:text-white">
                                         {user.name}
@@ -62,7 +62,7 @@ export default function UserDropdown() {
 
                         <Link href="/profile">
                             <DropdownMenuItem>
-                                <User className="w-4 h-4 mr-2" />
+                                <User className="mr-2 w-4 h-4" />
                                 <span>
                                     Profile
                                 </span>
@@ -71,7 +71,7 @@ export default function UserDropdown() {
 
                         <Link href="/account">
                             <DropdownMenuItem>
-                                <FileText className="w-4 h-4 mr-2" />
+                                <FileText className="mr-2 w-4 h-4" />
                                 <span>
                                     Account
                                 </span>
@@ -79,7 +79,7 @@ export default function UserDropdown() {
                         </Link>
 
                         <DropdownMenuItem onClick={() => logOut()}>
-                            <LogOut className="w-4 h-4 mr-2" />
+                            <LogOut className="mr-2 w-4 h-4" />
                             <span>
                                 Log out
                             </span>

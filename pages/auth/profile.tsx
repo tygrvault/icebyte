@@ -41,9 +41,9 @@ export default function ProfilePage() {
                 <meta name="robots" content="noindex" data-sj-noindex />
             </Head>
             <ProtectedPage>
-                <div className="flex flex-col items-center justify-center w-full">
+                <div className="flex flex-col justify-center items-center w-full">
                     <div className="flex flex-col max-w-[1400px] w-full items-start justify-start pt-4 px-6 pb-6 sm:px-8 sm:pb-8 md:px-12 md:pb-12 lg:px-16 lg:pb-16 gap-4">
-                        <div className="flex-col items-center gap-0 pb-4">
+                        <div className="flex-col gap-0 items-center pb-4">
                             <h1 className="text-4xl font-extrabold">
                                 Profile
                             </h1>
@@ -52,7 +52,7 @@ export default function ProfilePage() {
                             </p>
                         </div>
 
-                        <div className="flex flex-col justify-start w-full gap-8">
+                        <div className="flex flex-col gap-8 justify-start w-full">
                             <div className="flex flex-col gap-4 p-4 rounded-md bg-primary-200 dark:bg-primary-700/50">
                                 <div className="flex flex-col gap-0">
                                     <h2 className="text-xl font-semibold">
@@ -63,7 +63,7 @@ export default function ProfilePage() {
                                     </p>
                                 </div>
                                 <Input placeholder={user?.username} value={username} onChange={(e) => setUsername(e.target.value)} />
-                                <div className="flex flex-row items-center justify-between gap-8">
+                                <div className="flex flex-row gap-8 justify-between items-center">
                                     <p className="text-primary-500">
                                         Your username <b>must</b> be between 2 and 15 characters long.
                                     </p>
@@ -94,16 +94,16 @@ export default function ProfilePage() {
                                         Your avatar will be publicly visible in comments and likes but not referenced to your user.
                                     </p>
                                 </div>
-                                <div className="flex flex-row items-center gap-4">
+                                <div className="flex flex-row gap-4 items-center">
                                     <Avatar className="w-24 h-24">
-                                        <AvatarImage src={avatar} />
+                                        <AvatarImage alt="Avatar Display" aria-label="Avatar Display" src={avatar} />
                                         <AvatarFallback>{user?.name[0]}</AvatarFallback>
                                     </Avatar>
                                     <input type="file" ref={avatarInputRef} className="hidden" onChange={async (e) => {
                                         if (!e.target.files) return;
                                         await uploadAvatar(e.target.files[0]);
                                     }} />
-                                    <div className="flex flex-col items-center gap-4">
+                                    <div className="flex flex-col gap-4 items-center">
                                         <Button size="sm" onClick={() => avatarInputRef.current?.click()}>
                                             Upload
                                         </Button>
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                                         </AlertDialog>
                                     </div>
                                 </div>
-                                <div className="flex flex-row items-center justify-between gap-8">
+                                <div className="flex flex-row gap-8 justify-between items-center">
                                     <p className="text-primary-500">
                                         Support file types include: <b>png, jpg, jpeg, gif, webp</b> <br />
                                         Max file size: <b>12MB</b>
@@ -148,7 +148,7 @@ export default function ProfilePage() {
                                         Your banner will be publicly visible in comments and likes but not referenced to your user.
                                     </p>
                                 </div>
-                                <div className="flex flex-col items-center max-w-lg gap-4 sm:flex-row">
+                                <div className="flex flex-col gap-4 items-center max-w-lg sm:flex-row">
                                     <AspectRatio ratio={2 / 1}>
                                         <img src={banner} alt="banner" className="object-cover w-full h-full rounded-md" />
                                     </AspectRatio>
@@ -156,7 +156,7 @@ export default function ProfilePage() {
                                         if (!e.target.files) return;
                                         await uploadBanner(e.target.files[0]);
                                     }} />
-                                    <div className="flex flex-row items-center gap-4 sm:flex-col">
+                                    <div className="flex flex-row gap-4 items-center sm:flex-col">
                                         <Button size="sm" onClick={() => bannerInputRef.current?.click()}>
                                             Upload
                                         </Button>
@@ -184,7 +184,7 @@ export default function ProfilePage() {
                                         </AlertDialog>
                                     </div>
                                 </div>
-                                <div className="flex flex-row items-center justify-between gap-8">
+                                <div className="flex flex-row gap-8 justify-between items-center">
                                     <p className="text-primary-500">
                                         Support file types include: <b>png, jpg, jpeg, gif, webp</b> <br />
                                         Max file size: <b>12MB</b>
