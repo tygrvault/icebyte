@@ -25,7 +25,6 @@ export default function Home() {
         <meta property="og:url" content="https://icebyte.tygr.dev" />
       </Head>
       <div className="flex flex-col items-center justify-center w-full gap-8 my-12 sm:gap-6 md:gap-4 lg:gap-2 md:my-16 lg:my-24 xl:my-32 2xl:my-40">
-
         <div className="flex flex-col items-center max-w-[1400px] justify-center gap-4 text-center md:flex-row xs:gap-2">
           <Image alt="Logo" src={DarkLogo} className="hidden w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 dark:block" />
           <Image alt="Logo" src={LightLogo} className="block w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 dark:hidden" />
